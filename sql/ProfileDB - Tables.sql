@@ -1,0 +1,120 @@
+USE KiKiPups
+GO
+
+--	CREATE SCHEMA ProfileDB
+--	GO
+
+--	==================================================
+--		NOTES
+--	==================================================
+--		CODE: XPR
+--	* Profile > Section > Element are meant as the
+--		"archetype" tables for the structure
+--	==================================================
+
+
+IF OBJECT_ID('ProfileDB.Item') IS NOT NULL DROP TABLE ProfileDB.Item;
+IF OBJECT_ID('ProfileDB.Element') IS NOT NULL DROP TABLE ProfileDB.Element;
+IF OBJECT_ID('ProfileDB.Section') IS NOT NULL DROP TABLE ProfileDB.Section;
+IF OBJECT_ID('ProfileDB.Profile') IS NOT NULL DROP TABLE ProfileDB.[Profile];
+
+IF OBJECT_ID('ProfileDB.ElementType') IS NOT NULL DROP TABLE ProfileDB.ElementType;
+IF OBJECT_ID('ProfileDB.Keyword') IS NOT NULL DROP TABLE ProfileDB.Keyword;
+GO
+
+
+CREATE TABLE ProfileDB.Keyword (
+	KeywordID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	
+	Keyword VARCHAR(255) NOT NULL,	-- e.g. {{FIRST_NAME}}
+	
+	[Database] VARCHAR(255) NOT NULL,	-- Where to map Keyword
+	[Schema] VARCHAR(255) NOT NULL,
+	[Table] VARCHAR(255) NOT NULL,
+	[Column] VARCHAR(255) NOT NULL,
+
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL,
+
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID()
+);
+
+CREATE TABLE ProfileDB.ElementType (
+	ElementTypeID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	
+	Code VARCHAR(255) NOT NULL UNIQUE,
+	Name VARCHAR(255) NOT NULL,
+	[Description] NVARCHAR(MAX) NULL,
+
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL,
+
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID()
+);
+
+CREATE TABLE ProfileDB.[Profile] (
+	ProfileID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+
+	Name VARCHAR(255) NOT NULL,
+	[Description] NVARCHAR(MAX) NULL,
+	AllowInput BIT NOT NULL DEFAULT 0,
+
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL,
+
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID()
+);
+
+CREATE TABLE ProfileDB.Section (
+	SectionID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	ProfileID INT NOT NULL FOREIGN KEY REFERENCES ProfileDB.[Profile] (ProfileID),
+	
+	Label VARCHAR(255) NULL,
+	[Description] NVARCHAR(MAX) NULL,
+	ParentSectionID INT NULL FOREIGN KEY REFERENCES ProfileDB.Section (SectionID),
+	Ordinality INT NULL,
+
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL,
+
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID()
+);
+
+CREATE TABLE ProfileDB.Element (
+	ElementID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	SectionID INT NOT NULL FOREIGN KEY REFERENCES ProfileDB.Section (SectionID),
+
+	Name VARCHAR(255) NOT NULL,
+	Label VARCHAR(255) NULL,
+	[Description] NVARCHAR(MAX) NULL,
+	ElementTypeID INT NOT NULL FOREIGN KEY REFERENCES ProfileDB.ElementType (ElementTypeID),
+	Ordinality INT NULL,
+	IsInput BIT NOT NULL DEFAULT 0,
+
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL,
+
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID()
+);
+
+CREATE TABLE ProfileDB.Item (
+	ItemID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	ElementID INT NOT NULL FOREIGN KEY REFERENCES ProfileDB.Element (ElementID),
+	
+	Name VARCHAR(255) NOT NULL,
+	Label VARCHAR(255) NULL,
+	Value NVARCHAR(MAX) NULL,
+	KeywordID INT NULL FOREIGN KEY REFERENCES ProfileDB.[Keyword] (KeywordID),	-- Only use if the Item should map 1:1 with a Dictionary > Keyword
+	Ordinality INT NULL,
+
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL,
+
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID()
+);
