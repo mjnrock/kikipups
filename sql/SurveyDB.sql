@@ -7,6 +7,9 @@ GO
 --	===========================================================
 --		Drop Object
 --	===========================================================
+IF OBJECT_ID('SurveyDB.UserResponse') IS NOT NULL DROP TABLE SurveyDB.UserResponse;
+IF OBJECT_ID('SurveyDB.UserTemplate') IS NOT NULL DROP TABLE SurveyDB.UserTemplate;
+
 IF OBJECT_ID('SurveyDB.RuleValue') IS NOT NULL DROP TABLE SurveyDB.RuleValue;
 IF OBJECT_ID('SurveyDB.Rule') IS NOT NULL DROP TABLE SurveyDB.[Rule];
 
@@ -211,6 +214,32 @@ CREATE TABLE SurveyDB.RuleValue (
 	
 	Value NVARCHAR(MAX) NOT NULL,
 	Ordinality INT NULL,
+	
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL
+);
+
+
+CREATE TABLE SurveyDB.UserTemplate (
+	UserTemplateID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	
+	UserID INT NOT NULL FOREIGN KEY REFERENCES UserDB.[User] (UserID),
+	TemplateID INT NOT NULL FOREIGN KEY REFERENCES SurveyDB.[Template] (TemplateID),
+	
+	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	ModifiedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
+	DeactivatedDateTimeUTC DATETIME2(3) NULL
+);
+
+CREATE TABLE SurveyDB.UserResponse (
+	UserResponseID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	
+	UserTemplateID INT NOT NULL FOREIGN KEY REFERENCES SurveyDB.[UserTemplate] (UserTemplateID),
+	ElementID INT NOT NULL FOREIGN KEY REFERENCES SurveyDB.[Element] (ElementID),
+	Value NVARCHAR(MAX) NULL,
 	
 	UUID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
 	CreatedDateTimeUTC DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
