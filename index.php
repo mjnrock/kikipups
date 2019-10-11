@@ -16,7 +16,29 @@
     </head>
     <body>
         <div class="container">
-            <ul kp-pfc class="nav nav-tabs" style="cursor: pointer">
+            <div class="row">
+                <div class="col-4">
+                    <img src="./PusheenSuperFancy.gif" alt="Profile">
+                </div>
+                <div class="col-8">
+                    <div class="row display-3 text-center">
+                        Kiszka
+                    </div>
+
+                    <dl class="mt4 row">
+                        <dt class="col-4">Breed</dt>
+                        <dd class="col-8">Cat</dd>
+
+                        <dt class="col-4">Type</dt>
+                        <dd class="col-8">DMH</dd>
+
+                        <dt class="col-4">Color</dt>
+                        <dd class="col-8">Calico</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <ul kp-pfc class="mt4 nav nav-tabs" style="cursor: pointer">
                 <li kp-pft="-1" class="nav-item">
                     <span class="nav-link active text-primary">All</span>
                 </li>
