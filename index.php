@@ -26,10 +26,10 @@
                     </div>
 
                     <dl class="mt4 row">
-                        <dt class="col-4">Breed</dt>
+                        <dt class="col-4">Type</dt>
                         <dd class="col-8">Cat</dd>
 
-                        <dt class="col-4">Type</dt>
+                        <dt class="col-4">Breed</dt>
                         <dd class="col-8">DMH</dd>
 
                         <dt class="col-4">Color</dt>
