@@ -18,7 +18,7 @@
         <div class="container">
             <ul kp-pfc class="nav nav-tabs" style="cursor: pointer">
                 <li kp-pft="-1" class="nav-item">
-                    <span class="nav-link active">All</span>
+                    <span class="nav-link active text-primary">All</span>
                 </li>
                 
                 <li kp-pft="post" class="nav-item">
@@ -112,15 +112,21 @@
                 $(document).on("click", "ul[kp-pfc] > li[kp-pft]", function(e) {
                     let pft = $(this).attr("kp-pft");
 
+                    $("ul[kp-pfc] > li[kp-pft]").each(function(ev) {
+                        $(this).find("span").removeClass("active text-primary");
+                    });
+
                     if(pft === "-1") {
-                        $("ul[kp-pc] > li[kp-pt]").each(function(e) {
+                        $("ul[kp-pc] > li[kp-pt]").each(function(ev) {
+                            $(e.target).eq(0).addClass("active text-primary");
                             $(this).show();
                         });
                     } else {
-                        $("ul[kp-pc] > li[kp-pt]").each(function(e) {
+                        $("ul[kp-pc] > li[kp-pt]").each(function(ev) {
                             let pt =  $(this).attr("kp-pt");
 
                             if(pft === pt) {
+                                $(e.target).eq(0).addClass("active text-primary");
                                 $(this).show();
                             } else {
                                 $(this).hide();
