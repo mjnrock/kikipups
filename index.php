@@ -38,6 +38,36 @@
                 </div>
             </div>
 
+            <div class="row mt4 text-center">
+                <div class="card mb-3" style="max-width: 300px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="./raccoon.png" class="card-img" alt="">
+                        </div>
+                        <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Buddha</h5>
+                            <p class="card-text">He's a cat</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ml3 card mb-3" style="max-width: 300px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="./PusheenSuperFancy.gif" class="card-img" alt="">
+                        </div>
+                        <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">LeKiszka</h5>
+                            <p class="card-text">Another Kiszka?!</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="mt4">
                 <div class="input-group">
                     <div class="input-group-prepend dropdown">
