@@ -15,7 +15,7 @@
         <title>Document</title>
     </head>
     <body>
-        <div class="container">
+        <div class="container mt4">
             <div class="row">
                 <div class="col-4">
                     <img src="./PusheenSuperFancy.gif" alt="Profile">
@@ -38,7 +38,63 @@
                 </div>
             </div>
 
-            <ul kp-pfc class="mt4 nav nav-tabs" style="cursor: pointer">
+            <div class="mt4">
+                <div class="input-group">
+                    <div class="input-group-prepend dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            &#x1F4DD
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item">&#x1F4DD Post</li>
+                            <li class="dropdown-item">&#x2757 Alert</li>
+                            <li class="dropdown-item">&#x2754 Question</li>
+                            <li class="dropdown-divider"></li>
+                            <li class="dropdown-item">
+                                <input type="text" class="form-control" placeholder="Emoji Search" />
+
+                                <table class="mt1">
+                                    <tbody>
+                                        <tr>
+                                            <td>&#x1F600</td>
+                                            <td>&#x1F603</td>
+                                            <td>&#x1F604</td>
+                                            <td>&#x1F601</td>
+                                            <td>&#x1F602</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>&#x1F600</td>
+                                            <td>&#x1F603</td>
+                                            <td>&#x1F604</td>
+                                            <td>&#x1F601</td>
+                                            <td>&#x1F602</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>&#x1F600</td>
+                                            <td>&#x1F603</td>
+                                            <td>&#x1F604</td>
+                                            <td>&#x1F601</td>
+                                            <td>&#x1F602</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                        </ul>
+                    </div>
+                    <textarea
+                        class="form-control"
+                        rows="3"
+                        style="resize: none"
+                    >Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis consequatur quae doloribus fugiat voluptatum fugit, ullam minus laudantium et cupiditate sit nemo, labore nam, qui culpa mollitia impedit atque illum!</textarea>
+                </div>
+            </div>
+
+            <div class="mt1">
+                <button class="col btn btn-outline-primary">Post</button>
+            </div>
+
+            <ul kp-pfc class="mt4 mb3 nav nav-tabs" style="cursor: pointer">
                 <li kp-pft="-1" class="nav-item">
                     <span class="nav-link active text-primary">All</span>
                 </li>
