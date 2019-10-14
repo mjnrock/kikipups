@@ -8,6 +8,7 @@
             <a class="nav-item nav-link active" href="/profile">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="/profile">Profile</a>
             <a class="nav-item nav-link" href="/message">Message</a>
+            <a class="nav-item nav-link" href="/event">Event</a>
             <a class="nav-item nav-link" href="/article">Article</a>
             <a class="nav-item nav-link" href="/articles">ArticleFeed</a>
         </div>
