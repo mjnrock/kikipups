@@ -132,7 +132,7 @@
     <ul kp-pc>
         <li kp-pt="mood" class="row alert alert-light br3">
             <span class="ba br-100" style="overflow: hidden">
-                <img src="./PusheenSuperFancy.gif" height="98" alt="Pic" />
+                <img src="./pusheen.png" height="98" alt="Pic" />
             </span>
             <span class="col-2 text-center display-3">
                 &#x1F600
@@ -155,15 +155,45 @@
         </li>
         
         <li kp-pt="question" class="row alert alert-info br3">
-            <span class="ba br-100" style="overflow: hidden">
-                <img src="./PusheenSuperFancy.gif" height="98" alt="Pic" />
-            </span>
-            <span class="col-2 text-center display-3">
-                &#x2754
-            </span>
-            <span class="col-8">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
-            </span>
+            <div class="row">
+                <span class="ba br-100" style="overflow: hidden">
+                    <img src="./PusheenSuperFancy.gif" height="98" alt="Pic" />
+                </span>
+                <span class="col-2 text-center display-3">
+                    &#x2754
+                </span>
+                <span class="col-8">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
+                </span>
+            </div>
+
+            <div class="row mt4">
+                <ul kp-pc>
+                    <li kp-pt="mood" class="row alert alert-light br3">
+                        <span class="ba br-100" style="overflow: hidden">
+                            <img src="./raccoon.png" height="98" alt="Pic" />
+                        </span>
+                        <span class="col-2 text-center display-3">
+                            <?= Emoji::zipper_mouth_face(); ?>
+                        </span>
+                        <span class="col-8">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
+                        </span>
+                    </li>
+                    
+                    <li kp-pt="alert" class="row alert alert-light br3">
+                        <span class="ba br-100" style="overflow: hidden">
+                            <img src="./pusheen.png" height="98" alt="Pic" />
+                        </span>
+                        <span class="col-2 text-center display-3">
+                            <?= Emoji::hugging_face(); ?>
+                        </span>
+                        <span class="col-8">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
+                        </span>
+                    </li>
+                </ul>
+            </div>
         </li>
 
         <li kp-pt="mood" class="row alert alert-light br3">

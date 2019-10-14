@@ -20,8 +20,8 @@
     </head>
     <body>
 
-        <?php //    require "./views/profile.php"; ?>
-        <?php require "./views/message.php"; ?>
+        <?php require "./views/profile.php"; ?>
+        <?php //    require "./views/message.php"; ?>
 
     </body>
 </html>
