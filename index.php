@@ -5,6 +5,7 @@
 
 	Router::QuickGet("/profile", "Profile");
 	Router::QuickGet("/message", "Message");
+	Router::QuickGet("/article", "Article");
 	Router::QuickGet("/articles", "ArticleFeed");
 
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_footer.php";
