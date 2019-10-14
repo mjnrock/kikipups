@@ -1,3 +1,7 @@
+<?php
+    require_once "./lib/core.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>

@@ -4,9 +4,9 @@
     </div>
 
     <div class="row">
-        <button class="col btn btn-outline-secondary">&#x1F4DE</button>
-        <button class="col btn btn-outline-secondary">&#x1F5FA</button>
-        <button class="col btn btn-outline-secondary">&#x2139</button>
+        <button class="col btn btn-outline-secondary"><?= Emoji::telephone_receiver(); ?></button>
+        <button class="col btn btn-outline-secondary"><?= Emoji::globe_with_meridians(); ?></button>
+        <button class="col btn btn-outline-secondary"><?= Emoji::information_source(); ?></button>
     </div>
 
     <div class="row mt4">
@@ -41,7 +41,7 @@
                 <div class="col-8">
                     <div kp-pt="question" class="row alert alert-info br3">
                         <span class="col-2 text-center display-3">
-                            &#x2754
+                            <?= Emoji::grey_question(); ?>
                         </span>
                         <span class="col-8">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
@@ -64,7 +64,7 @@
                 <div class="col-8">                        
                     <div kp-pt="alert" class="row alert alert-danger br3">
                         <span class="col-2 text-center display-3">
-                            &#x2757
+                            <?= Emoji::exclamation(); ?>
                         </span>
                         <span class="col-8">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
