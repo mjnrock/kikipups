@@ -1,4 +1,5 @@
 <?php
+    //* This class requires associative keys for the mapping array to work predictably
     class RecursivePoster {
         function __construct($dataset, $mapping, $partialURI = "./partials/") {
             $this->DataSet = [];
