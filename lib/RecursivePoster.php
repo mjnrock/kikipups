@@ -1,11 +1,11 @@
 <?php
     //* This class requires associative keys for the mapping array to work predictably
-    //*  and will find its partials in {$_SERVER["DOCUMENT_ROOT"]}/partials/ by default
+    //*  and will find its partials in ./partials/ by default
     class RecursivePoster {
-        function __construct($dataset, $mapping = null, $partialURI = "kkp/partials/") {
+        function __construct($dataset, $mapping = null, $partialURI = "./partials/") {
             $this->DataSet = [];
             $this->Mapping = $mapping;
-            $this->PartialURI = "{$_SERVER["DOCUMENT_ROOT"]}}/" . $partialURI;
+            $this->PartialURI = $partialURI;
             $this->Functions = [];
 
             $this->Seed($dataset);

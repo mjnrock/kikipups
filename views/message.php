@@ -13,7 +13,7 @@
         <div class="col-11 container" style="height: 600px; overflow-y: scroll">
             <div class="row alert alert-light">
                 <div class="col-4">
-                    <img src="./.{$_SERVER["DOCUMENT_ROOT"]}/PusheenSuperFancy.gif" alt="" />
+                    <img src="./PusheenSuperFancy.gif" alt="" />
                 </div>
 
                 <div class="col-8">
@@ -29,13 +29,13 @@
                 </div>
 
                 <div class="col-4">
-                    <img src="./.{$_SERVER["DOCUMENT_ROOT"]}/raccoon.png" alt="" />
+                    <img src="./raccoon.png" alt="" />
                 </div>
             </div>
             
             <div class="row alert alert-light">
                 <div class="col-4">
-                    <img src="./.{$_SERVER["DOCUMENT_ROOT"]}/PusheenSuperFancy.gif" alt="" />
+                    <img src="./PusheenSuperFancy.gif" alt="" />
                 </div>
 
                 <div class="col-8">
@@ -52,7 +52,7 @@
             
             <div class="row alert alert-light">
                 <div class="col-4">
-                    <img src="./.{$_SERVER["DOCUMENT_ROOT"]}/PusheenSuperFancy.gif" alt="" />
+                    <img src="./PusheenSuperFancy.gif" alt="" />
                 </div>
 
                 <div class="col-8">
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="col-4">
-                    <img src="./.{$_SERVER["DOCUMENT_ROOT"]}/raccoon.png" alt="" />
+                    <img src="./raccoon.png" alt="" />
                 </div>
             </div>
         </div>

@@ -2,19 +2,19 @@
     $DataBag = new RecursivePoster([
         [
             "post-type" => "alert",
-            "picture-uri" => "{$_SERVER["DOCUMENT_ROOT"]}/raccoon.png",
+            "picture-uri" => "./raccoon.png",
             "icon" => "&#x2757",
             "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde necessitatibus quasi consequatur aperiam asperiores ab soluta saepe, perspiciatis ut porro excepturi atque, deleniti reiciendis iste distinctio cumque, recusandae dolore ratione?"
         ],
         [
             "post-type" => "mood",
-            "picture-uri" => "{$_SERVER["DOCUMENT_ROOT"]}/pusheen.png",
+            "picture-uri" => "./pusheen.png",
             "icon" => "&#x1F600",
             "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde necessitatibus quasi consequatur aperiam asperiores ab soluta saepe, perspiciatis ut porro excepturi atque, deleniti reiciendis iste distinctio cumque, recusandae dolore ratione?"
         ],
         [
             "post-type" => "question",
-            "picture-uri" => "{$_SERVER["DOCUMENT_ROOT"]}/raccoon.png",
+            "picture-uri" => "./raccoon.png",
             "icon" => "&#x2754",
             "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde necessitatibus quasi consequatur aperiam asperiores ab soluta saepe, perspiciatis ut porro excepturi atque, deleniti reiciendis iste distinctio cumque, recusandae dolore ratione?"
         ]
