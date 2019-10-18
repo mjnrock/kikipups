@@ -81,7 +81,7 @@
 				$ViewBag = $preload(Router::$LastRequest);
 			}
 			Router::Route("GET", $route, (function() use ($URI, $Request, $ViewBag) {
-				require_once "{$_SERVER["DOCUMENT_ROOT"]}/routes/{$URI}.php";
+				require_once Router::$Server["DOCUMENT_ROOT"] . "/routes/{$URI}.php";
 			}));
 		}
 

@@ -1,4 +1,4 @@
-<?php    
+<?php
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
 	
 	Router::SetServer($_SERVER);
@@ -8,6 +8,7 @@
 	Router::QuickGet("/event", "Event");
 	Router::QuickGet("/articles", "ArticleFeed");
 	Router::QuickGet("/article", "Article");
+
 
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_footer.php";
 ?>
@@ -25,7 +26,7 @@
     function CreateDataPost($partial, $id, $lookup) {
         $ViewBag = $lookup[ $id ];
 
-        include "./partials/${partial}.php";
+        include "{$_SERVER["DOCUMENT_ROOT"]}/partials/${partial}.php";
     }
 ?>
 <php   // ${partial}.php ?>
@@ -40,6 +41,6 @@
     ?>
 </div> -->
 
-<?php //    require "./views/ArticleFeed.php"; ?>
-<?php //    require "./views/Profile.php"; ?>
-<?php //    require "./views/Message.php"; ?>
+<?php //    require "{$_SERVER["DOCUMENT_ROOT"]}/views/ArticleFeed.php"; ?>
+<?php //    require "{$_SERVER["DOCUMENT_ROOT"]}/views/Profile.php"; ?>
+<?php //    require "{$_SERVER["DOCUMENT_ROOT"]}/views/Message.php"; ?>
