@@ -1,5 +1,5 @@
 <?php
-    $DataBag = new DataSetPoster([
+    $DataBag = new RecursivePoster([
         [
             "post-type" => "alert",
             "picture-uri" => "./raccoon.png",

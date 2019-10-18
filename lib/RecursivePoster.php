@@ -1,7 +1,7 @@
 <?php
     //* This class requires associative keys for the mapping array to work predictably
     //*  and will find its partials in ./partials/ by default
-    class DataSetPoster {
+    class RecursivePoster {
         function __construct($dataset, $mapping = null, $partialURI = "./partials/") {
             $this->DataSet = [];
             $this->Mapping = $mapping;
@@ -18,13 +18,13 @@
         }
 
         public function Seed($dataset) {
-            $this->DataSet = DataSetPoster::ProcessDataSet($dataset, $this->Mapping);
+            $this->DataSet = RecursivePoster::ProcessDataSet($dataset, $this->Mapping);
 
             return $this;
         }
 
         public function Create($id, $partial) {
-            DataSetPoster::CreatePartial($this->PartialURI . $partial, $id, $this);
+            RecursivePoster::CreatePartial($this->PartialURI . $partial, $id, $this);
 
             return $this;
         }
@@ -40,7 +40,7 @@
     
             include $partial . ".php";
 
-            return DataSetPoster;
+            return RecursivePoster;
         }
 
         public static function ProcessRow($id, $key, $payload, $children = [], $order = null) {
@@ -58,7 +58,7 @@
 
             if(isset($mapping)) {
                 foreach($dataset as $i => $item) {
-                    $row = DataSetPoster::ProcessRow(
+                    $row = RecursivePoster::ProcessRow(
                         $item[ (int)$mapping[ "id" ] ],
                         $item[ $mapping[ "key" ] ],
                         $item[ $mapping[ "payload" ] ],
@@ -70,7 +70,7 @@
                 }
             } else {
                 foreach($dataset as $i => $item) {
-                    $row = DataSetPoster::ProcessRow(
+                    $row = RecursivePoster::ProcessRow(
                         null,
                         null,
                         $item,
