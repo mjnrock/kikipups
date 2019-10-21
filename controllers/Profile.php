@@ -31,11 +31,3 @@
         return "light";
     });
 ?>
-
-<ul>
-    <?php
-        foreach($DataBag->DataSet as $i => $row) {
-            $DataBag->Create($i, "Post");
-        }
-    ?>
-</ul>

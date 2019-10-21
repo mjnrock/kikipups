@@ -23,7 +23,7 @@
             return $this;
         }
 
-        public function Create($id, $partial) {
+        public function callPartial($id, $partial) {
             RecursivePoster::CreatePartial($this->PartialURI . $partial, $id, $this);
 
             return $this;
