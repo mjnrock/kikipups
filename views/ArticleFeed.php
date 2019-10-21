@@ -19,7 +19,7 @@
         <li kp-pt="health" class="row alert alert-secondary br3">
             <div class="row">
                 <span class="col-2 text-center display-3">
-                    <img src="./landscape-1.jpg" height="98" alt="Pic" />
+                    <img src="./assets/images/landscape-1.jpg" height="98" alt="Pic" />
                 </span>
                 <span class="col-8">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
@@ -37,7 +37,7 @@
         <li kp-pt="education" class="row alert alert-secondary br3">
             <div class="row">
                 <span class="col-2 text-center display-3">
-                    <img src="./landscape-2.jpg" height="98" alt="Pic" />
+                    <img src="./assets/images/landscape-2.jpg" height="98" alt="Pic" />
                 </span>
                 <span class="col-8">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
@@ -55,7 +55,7 @@
         <li kp-pt="grief" class="row alert alert-secondary br3">
             <div class="row">
                 <span class="col-2 text-center display-3">
-                    <img src="./landscape-3.jpg" height="98" alt="Pic" />
+                    <img src="./assets/images/landscape-3.jpg" height="98" alt="Pic" />
                 </span>
                 <span class="col-8">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.

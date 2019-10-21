@@ -3,7 +3,7 @@
 
     <div class="row mt4 mb4">
         <div class="col-4 text-center">
-            <img src="./landscape-2.jpg" alt="Picture">
+            <img src="./assets/images/landscape-2.jpg" alt="Picture">
         </div>
         <div class="col-8">
             <textarea class="form-control" rows="4">

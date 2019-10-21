@@ -4,11 +4,11 @@
 	$router = new Router(new Request);
 
 	
-	$router->get("/profile", $router->render("Profile"));
-	$router->get("/message", $router->render("Message"));
-	$router->get("/event", $router->render("Event"));
-	$router->get("/articles", $router->render("ArticleFeed"));
-	$router->get("/article", $router->render("Article"));	
+	$router->get("/profile", $router->callRoute("Profile"));
+	$router->get("/message", $router->callRoute("Message"));
+	$router->get("/event", $router->callRoute("Event"));
+	$router->get("/articles", $router->callRoute("ArticleFeed"));
+	$router->get("/article", $router->callRoute("Article"));	
 
 
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_footer.php";

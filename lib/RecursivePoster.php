@@ -38,7 +38,7 @@
             $ViewBag[ "@scope" ] = $scope;
             $ViewBag[ "@fn" ] = $scope->Functions;
     
-            include $partial . ".php";
+            include "{$_SERVER["DOCUMENT_ROOT"]}/partials/{$partial}.php";
 
             return RecursivePoster;
         }

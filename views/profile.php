@@ -1,7 +1,7 @@
 <div class="container mt4">
     <div class="row">
         <div class="col-4">
-            <img src="./PusheenSuperFancy.gif" alt="Profile">
+            <img src="./assets/images/PusheenSuperFancy.gif" alt="Profile">
         </div>
         <div class="col-8">
             <div class="row display-3 text-center">
@@ -25,7 +25,7 @@
         <div class="card mb-3" style="max-width: 300px;">
             <div class="row no-gutters">
                 <div class="col-md-4">
-                    <img src="./raccoon.png" class="card-img" alt="">
+                    <img src="./assets/images/raccoon.png" class="card-img" alt="">
                 </div>
                 <div class="col-md-8">
                 <div class="card-body">
@@ -39,7 +39,7 @@
         <div class="ml3 card mb-3" style="max-width: 300px;">
             <div class="row no-gutters">
                 <div class="col-md-4">
-                    <img src="./PusheenSuperFancy.gif" class="card-img" alt="">
+                    <img src="./assets/images/PusheenSuperFancy.gif" class="card-img" alt="">
                 </div>
                 <div class="col-md-8">
                 <div class="card-body">
@@ -132,7 +132,7 @@
     <ul kp-pc>
         <li kp-pt="mood" class="row alert alert-light br3">
             <span class="ba br-100" style="overflow: hidden">
-                <img src="./pusheen.png" height="98" alt="Pic" />
+                <img src="./assets/images/pusheen.png" height="98" alt="Pic" />
             </span>
             <span class="col-2 text-center display-3">
                 &#x1F600
@@ -144,7 +144,7 @@
         
         <li kp-pt="alert" class="row alert alert-danger br3">
             <span class="ba br-100" style="overflow: hidden">
-                <img src="./PusheenSuperFancy.gif" height="98" alt="Pic" />
+                <img src="./assets/images/PusheenSuperFancy.gif" height="98" alt="Pic" />
             </span>
             <span class="col-2 text-center display-3">
                 &#x2757
@@ -157,7 +157,7 @@
         <li kp-pt="question" class="row alert alert-info br3">
             <div class="row">
                 <span class="ba br-100" style="overflow: hidden">
-                    <img src="./PusheenSuperFancy.gif" height="98" alt="Pic" />
+                    <img src="./assets/images/PusheenSuperFancy.gif" height="98" alt="Pic" />
                 </span>
                 <span class="col-2 text-center display-3">
                     &#x2754
@@ -171,7 +171,7 @@
                 <ul kp-pc>
                     <li kp-pt="mood" class="row alert alert-light br3">
                         <span class="ba br-100" style="overflow: hidden">
-                            <img src="./raccoon.png" height="98" alt="Pic" />
+                            <img src="./assets/images/raccoon.png" height="98" alt="Pic" />
                         </span>
                         <span class="col-2 text-center display-3">
                             <?= Emoji::zipper_mouth_face(); ?>
@@ -183,7 +183,7 @@
                     
                     <li kp-pt="alert" class="row alert alert-light br3">
                         <span class="ba br-100" style="overflow: hidden">
-                            <img src="./pusheen.png" height="98" alt="Pic" />
+                            <img src="./assets/images/pusheen.png" height="98" alt="Pic" />
                         </span>
                         <span class="col-2 text-center display-3">
                             <?= Emoji::hugging_face(); ?>
@@ -198,7 +198,7 @@
 
         <li kp-pt="mood" class="row alert alert-light br3">
             <span class="ba br-100" style="overflow: hidden">
-                <img src="./raccoon.png" height="98" alt="Pic" />
+                <img src="./assets/images/raccoon.png" height="98" alt="Pic" />
             </span>
             <span class="col-2 text-center display-3">
                 &#x1F625
@@ -210,7 +210,7 @@
 
         <li kp-pt="post" class="row alert alert-light br3">
             <span class="ba br-100" style="overflow: hidden">
-                <img src="./PusheenSuperFancy.gif" height="98" alt="Pic" />
+                <img src="./assets/images/PusheenSuperFancy.gif" height="98" alt="Pic" />
             </span>
             <span class="col">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo.
@@ -219,7 +219,7 @@
 
         <li kp-pt="quote" class="row alert alert-secondary br3">
             <span class="ba br-100" style="overflow: hidden">
-                <img src="./raccoon.png" height="98" alt="Pic" />
+                <img src="./assets/images/raccoon.png" height="98" alt="Pic" />
             </span>
             <span class="col font-italic">
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, nisi obcaecati eius maiores autem voluptas. Cumque, quo, temporibus deserunt molestias, assumenda nostrum voluptas nulla ex enim animi quaerat vitae explicabo."

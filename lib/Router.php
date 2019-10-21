@@ -15,7 +15,7 @@
 			$this->{strtolower($name) }[$this->formatRoute($route) ] = $method;
 		}
 
-		public function render($filename) {
+		public function callRoute($filename) {
 			return function() use ($filename) {
 				include "{$_SERVER["DOCUMENT_ROOT"]}/routes/{$filename}.php";
 			};

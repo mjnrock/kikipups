@@ -11,7 +11,7 @@
 
     <div class="row mt4">
         <div class="col-4 text-center">
-            <img src="./map-1.png" alt="Map">
+            <img src="./assets/images/map-1.png" alt="Map">
 
             <div>
                 <span>123 Dog Park, Rd.</span>
@@ -28,7 +28,7 @@
         <div class="card alert-primary mb-3" style="max-width: 300px;min-width: 300px;">
             <div class="row no-gutters">
                 <div class="col-md-4">
-                    <img src="./raccoon.png" class="card-img" alt="">
+                    <img src="./assets/images/raccoon.png" class="card-img" alt="">
                 </div>
                 <div class="col-md-8">
                 <div class="card-body">
@@ -42,7 +42,7 @@
         <div class="ml2 card alert-primary mb-3" style="max-width: 300px;min-width: 300px;">
             <div class="row no-gutters">
                 <div class="col-md-4">
-                    <img src="./PusheenSuperFancy.gif" class="card-img" alt="">
+                    <img src="./assets/images/PusheenSuperFancy.gif" class="card-img" alt="">
                 </div>
                 <div class="col-md-8">
                 <div class="card-body">
@@ -56,7 +56,7 @@
         <div class="ml2 card mb-3" style="max-width: 300px;min-width: 300px;">
             <div class="row alert-dark no-gutters">
                 <div class="col-md-4">
-                    <img src="./pusheen.png" class="card-img" alt="">
+                    <img src="./assets/images/pusheen.png" class="card-img" alt="">
                 </div>
                 <div class="col-md-8">
                 <div class="card-body">
