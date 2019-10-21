@@ -1,37 +1,37 @@
 <?php
-	class Request {
-		public $URI;
-		public $Verb;
-		public $Params;
-		public $Variables;
-		public $Query;
-
-		public function __construct($route, $uri, $verb, $params, $queries) {
-			$this->URI = $uri;
-			$this->Verb = $verb;
-			$this->Params = $params;
-			$this->Variables = $this->GetVariables($route);
-			$this->Query = $queries;
+	class Request implements IRequest {
+		function __construct() {
+			$this->bootstrapSelf();
 		}
 
-		public function GetVariables($route) {
-			if($route[0] === "/") {
-				$route = substr($route, 1);
+		private function bootstrapSelf() {
+			foreach ($_SERVER as $key => $value) {
+				$this->{$this->toCamelCase($key) } = $value;
 			}
-			$route = explode("/", $route);
+		}
 
-			if(sizeof($route) !== sizeof($this->Params)) {
-				return [];
+		private function toCamelCase($string) {
+			$result = strtolower($string);
+			preg_match_all("/_[a-z]/", $result, $matches);
+			foreach ($matches[0] as $match) {
+				$c = str_replace("_", "", strtoupper($match));
+				$result = str_replace($match, $c, $result);
 			}
-			
-			$vars = [];
-			foreach($route as $i => $r) {
-				if(substr($r, 0, 1) === ":") {
-					$vars[substr($r, 1)] = $this->Params[$i];
+			return $result;
+		}
+		
+		public function getBody() {
+			if ($this->requestMethod === "GET") {
+				return;
+			}
+			if ($this->requestMethod == "POST") {
+				$body = array();
+				foreach ($_POST as $key => $value) {
+					$body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
 				}
+				return $body;
 			}
-
-			return $vars;
 		}
 	}
+
 ?>

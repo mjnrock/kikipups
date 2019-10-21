@@ -1,13 +1,14 @@
 <?php
-	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
-	
-	Router::SetServer($_SERVER);
+	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";	
 
-	Router::QuickGet("/profile", "Profile");
-	Router::QuickGet("/message", "Message");
-	Router::QuickGet("/event", "Event");
-	Router::QuickGet("/articles", "ArticleFeed");
-	Router::QuickGet("/article", "Article");
+	$router = new Router(new Request);
+
+	
+	$router->get("/profile", $router->render("Profile"));
+	$router->get("/message", $router->render("Message"));
+	$router->get("/event", $router->render("Event"));
+	$router->get("/articles", $router->render("ArticleFeed"));
+	$router->get("/article", $router->render("Article"));	
 
 
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_footer.php";
