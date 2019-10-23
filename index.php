@@ -1,14 +1,45 @@
 <?php
-	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";	
+	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
+    require_once "{$_SERVER["DOCUMENT_ROOT"]}/server/db/Select.php";
+    
+    $Select = (new Select([
+        "{{1}}",
+        "dog"
+    ]))
+        ->From("Cats")
+        ->InnerJoin("Cats", "t0.bob", "t1.{{1}}")
+        ->RightJoin("{{0}}", "t0.bob", "t1.weasel")
+        ->CrossApply("Cats")
+        ->Where("t0.Bob = '{{0}}'")
+        ->GroupBy([
+            "fish",
+            "bread"
+        ])
+        ->Interpolate([
+            "FIHAFJKKSHDKJSA",
+            "435243543534543"
+        ]);
+        // ->Having("t1.Bob = 'c@ts'")
+        // ->OrderBy([
+        //     "cheese ASC",
+        //     "cheese DESC"
+        // ])
+    ;
 
-	$router = new Router(new Request);
+    echo "-------------------------";
+    cout(
+        $Select->Process()
+    );
+    echo "-------------------------";
+
+	// $router = new Router(new Request);
 
 	
-	$router->get("/profile", $router->callRoute("Profile"));
-	$router->get("/message", $router->callRoute("Message"));
-	$router->get("/event", $router->callRoute("Event"));
-	$router->get("/articles", $router->callRoute("ArticleFeed"));
-	$router->get("/article", $router->callRoute("Article"));	
+	// $router->get("/profile", $router->callRoute("Profile"));
+	// $router->get("/message", $router->callRoute("Message"));
+	// $router->get("/event", $router->callRoute("Event"));
+	// $router->get("/articles", $router->callRoute("ArticleFeed"));
+	// $router->get("/article", $router->callRoute("Article"));	
 
 
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_footer.php";
