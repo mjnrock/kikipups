@@ -73,13 +73,13 @@
 
             return $this;
         }
-        public function CrossApply($table) {
-            $this->_addTable($table, [ "APPLY", "CROSS" ], null, null);
+        public function CrossApply($table, $inputs = []) {
+            $this->_addTable($table, [ "APPLY", "CROSS" ], $inputs, null);
 
             return $this;
         }
-        public function OuterApply($table) {
-            $this->_addTable($table, [ "APPLY", "OUTER" ], null, null);
+        public function OuterApply($table, $inputs = []) {
+            $this->_addTable($table, [ "APPLY", "OUTER" ], $inputs, null);
 
             return $this;
         }
@@ -101,7 +101,26 @@
                             $query .= "\n\t" . $table[ 1 ][ "type" ][ 1 ] . " " . $table[ 1 ][ "type" ][ 0 ] . " " . $table[ 0 ][ "name" ] . " t{$i}";
                             $query .= "\n\t\t" . "ON " . $table[ 1 ][ "left" ] . " = " . $table[ 1 ][ "right" ];
                         } else if($table[ 1 ][ "type" ][ 0 ] === "APPLY") {
-                            $query .= "\n\t" . $table[ 1 ][ "type" ][ 1 ] . " " . $table[ 1 ][ "type" ][ 0 ] . " " . $table[ 0 ][ "name" ] . " t{$i}";
+                            $query .= "\n\t"
+                                . $table[ 1 ][ "type" ][ 1 ] . " "
+                                . $table[ 1 ][ "type" ][ 0 ] . " "
+                                . $table[ 0 ][ "name" ];
+
+                            if(is_array($table[ 1 ][ "left" ]) && !empty($table[ 1 ][ "left" ])) {
+                                $query .= "(";
+
+                                foreach($table[ 1 ][ "left" ] as $i => $param) {
+                                    if($i === 0) {
+                                        $query .= $param;
+                                    } else {
+                                        $query .= ", " . $param;
+                                    }
+                                }
+                                
+                                $query .= ")";
+                            }
+
+                            $query .= " t{$i}";
                         }
                     }
                 }
@@ -201,6 +220,15 @@
         }
         
 
+        protected function _interpolate($params = []) {
+            if(is_array($params) && !empty($params)) {
+                foreach($params as $i => $param) {
+                    $this->Query = preg_replace("/\{\{[{$i}]}}/m", $param, $this->Query);
+                }
+            }
+
+            return $this->Query;
+        }
         public function Process() {
             $query = $this->_select();
             $query .= $this->_from();
@@ -209,26 +237,20 @@
             $query .= $this->_having();
             $query .= $this->_orderBy();
 
-            $this->Query = $query;
-
             return $query;
         }
-        public function Interpolate($params = []) {
-            $this->Process();
-
-            if(is_array($params) && !empty($params)) {
-                foreach($params as $i => $param) {
-                    $this->Query = preg_replace("/\{\{[{$i}]}}/m", $param, $this->Query);
-                }
-            }
-            cout($this->Query);
-
-            return $this;
-        }
-
         
         public static function Start($columns = [ "*" ]) {
             return new Select($columns);
+        }
+        public function End($params = []) {
+            $this->Query = $this->Process();
+
+            if(is_array($params) && !empty($params)) {
+                $this->_interpolate($params);
+            }
+
+            return $this->Query;
         }
     }
 ?>

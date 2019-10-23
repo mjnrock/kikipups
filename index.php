@@ -2,22 +2,22 @@
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/server/db/Select.php";
     
-    $Select = (new Select([
+    $Select = Select::Start([
         "{{1}}",
         "dog"
-    ]))
+    ])
         ->From("Cats")
         ->InnerJoin("Cats", "t0.bob", "t1.{{1}}")
         ->RightJoin("{{0}}", "t0.bob", "t1.weasel")
-        ->CrossApply("Cats")
+    ->OUterApply("Cats", [
+        "1asd",
+        "2sgfre",
+        "3fsadfsad"
+    ])
         ->Where("t0.Bob = '{{0}}'")
         ->GroupBy([
             "fish",
             "bread"
-        ])
-        ->Interpolate([
-            "FIHAFJKKSHDKJSA",
-            "435243543534543"
         ]);
         // ->Having("t1.Bob = 'c@ts'")
         // ->OrderBy([
@@ -29,6 +29,14 @@
     echo "-------------------------";
     cout(
         $Select->Process()
+    );
+    echo "-------------------------";
+    echo "-------------------------";
+    cout(
+        $Select->End([
+            "2435432534",
+            "asdfsadfsdfsd"
+        ])
     );
     echo "-------------------------";
 
