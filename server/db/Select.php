@@ -17,14 +17,24 @@
 
             return $this;
         }
-        protected function _select() {
-            $query = "SELECT";
+        protected function _tabs($indent = 0) {
+            $tabs = "";
 
+            for($i = 0; $i < $indent; $i++) {
+                $tabs .= "\t";
+            }
+
+            return $tabs;
+        }
+        protected function _select($indent = 0) {
+            $tabs = $this->_tabs($indent);
+            
+            $query = "{$tabs}SELECT";
             foreach($this->Columns as $i => $col) {
                 if($i === 0) {
-                    $query .= "\n\t" . $col;
+                    $query .= "\n{$tabs}\t" . $col;
                 } else {
-                    $query .= "\n\t," . $col;
+                    $query .= "\n{$tabs}\t" . $col;
                 }
             }
 
@@ -83,25 +93,31 @@
 
             return $this;
         }
-        protected function _from() {
-            $query = "FROM";
+        protected function _from($indent = 0) {
+            $tabs = $this->_tabs($indent);
 
+            $query = "{$tabs}FROM";
             foreach($this->From as $i => $table) {
                 if($i === 0) {
-                    if($table[ 0 ][ "type" ] === "CLASS") {
-                        //  TODO
+                    $item = "";
+                    if($table[ 0 ][ "type" ] === "CLASS" && $table[ 0 ][ "name" ] instanceof Select) {
+                        $item .= "{$tabs}\t(\n"
+                            . $table[ 0 ][ "name" ]->Process($indent + 2)
+                            . "{$tabs}\t)";
                     } else {
-                        $query .= "\n\t" . $table[ 0 ][ "name" ] . " t{$i}";
+                        $item = "\t" . $table[ 0 ][ "name" ];
                     }
+
+                    $query .= "\n{$tabs}" . $item . " t{$i}";
                 } else {
-                    if($table[ 0 ][ "type" ] === "CLASS") {
+                    if($table[ 0 ][ "type" ] === "CLASS" && $table[ 0 ][ "name" ] instanceof Select) {
                         //  TODO
                     } else {
                         if($table[ 1 ][ "type" ][ 0 ] === "JOIN") {
-                            $query .= "\n\t" . $table[ 1 ][ "type" ][ 1 ] . " " . $table[ 1 ][ "type" ][ 0 ] . " " . $table[ 0 ][ "name" ] . " t{$i}";
-                            $query .= "\n\t\t" . "ON " . $table[ 1 ][ "left" ] . " = " . $table[ 1 ][ "right" ];
+                            $query .= "\n{$tabs}\t" . $table[ 1 ][ "type" ][ 1 ] . " " . $table[ 1 ][ "type" ][ 0 ] . " " . $table[ 0 ][ "name" ] . " t{$i}";
+                            $query .= "\n{$tabs}\t\t" . "ON " . $table[ 1 ][ "left" ] . " = " . $table[ 1 ][ "right" ];
                         } else if($table[ 1 ][ "type" ][ 0 ] === "APPLY") {
-                            $query .= "\n\t"
+                            $query .= "\n{$tabs}\t"
                                 . $table[ 1 ][ "type" ][ 1 ] . " "
                                 . $table[ 1 ][ "type" ][ 0 ] . " "
                                 . $table[ 0 ][ "name" ];
@@ -138,11 +154,13 @@
 
             return $this;
         }
-        protected function _where() {
+        protected function _where($indent = 0) {
+            $tabs = $this->_tabs($indent);
+
             if(!empty($this->Where)) {
-                $query = "WHERE (";
-                $query .= "\n\t" . $this->Where[ 0 ];
-                $query .= "\n)";
+                $query = "{$tabs}WHERE (";
+                $query .= "\n{$tabs}\t" . $this->Where[ 0 ];
+                $query .= "\n{$tabs})";
     
                 return $query . "\n";
             }
@@ -157,15 +175,17 @@
 
             return $this;
         }
-        protected function _groupBy() {
+        protected function _groupBy($indent = 0) {
+            $tabs = $this->_tabs($indent);
+
             if(!empty($this->GroupBy)) {
-                $query = "GROUP BY";
+                $query = "{$tabs}GROUP BY";
     
                 foreach($this->GroupBy as $i => $col) {
                     if($i === 0) {
-                        $query .= "\n\t" . $col;
+                        $query .= "\n{$tabs}\t" . $col;
                     } else {
-                        $query .= "\n\t," . $col;
+                        $query .= "\n{$tabs}\t," . $col;
                     }
                 }
     
@@ -182,11 +202,13 @@
 
             return $this;
         }
-        protected function _having() {
+        protected function _having($indent = 0) {
+            $tabs = $this->_tabs($indent);
+
             if(!empty($this->Having)) {
-                $query = "HAVING (";
-                $query .= "\n\t" . $this->Having[ 0 ];
-                $query .= "\n)";
+                $query = "{$tabs}HAVING (";
+                $query .= "\n{$tabs}\t" . $this->Having[ 0 ];
+                $query .= "\n{$tabs})";
     
                 return $query . "\n";
             }
@@ -201,15 +223,17 @@
 
             return $this;
         }
-        protected function _orderBy() {
+        protected function _orderBy($indent = 0) {
+            $tabs = $this->_tabs($indent);
+
             if(!empty($this->OrderBy)) {
-                $query = "ORDER BY";
+                $query = "{$tabs}ORDER BY";
 
                 foreach($this->OrderBy as $i => $col) {
                     if($i === 0) {
-                        $query .= "\n\t" . $col;
+                        $query .= "\n{$tabs}\t" . $col;
                     } else {
-                        $query .= "\n\t," . $col;
+                        $query .= "\n{$tabs}\t," . $col;
                     }
                 }
 
@@ -229,13 +253,13 @@
 
             return $this->Query;
         }
-        public function Process() {
-            $query = $this->_select();
-            $query .= $this->_from();
-            $query .= $this->_where();
-            $query .= $this->_groupBy();
-            $query .= $this->_having();
-            $query .= $this->_orderBy();
+        public function Process($indent = 0) {
+            $query = $this->_select($indent);
+            $query .= $this->_from($indent);
+            $query .= $this->_where($indent);
+            $query .= $this->_groupBy($indent);
+            $query .= $this->_having($indent);
+            $query .= $this->_orderBy($indent);
 
             return $query;
         }

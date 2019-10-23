@@ -9,11 +9,11 @@
         ->From("Cats")
         ->InnerJoin("Cats", "t0.bob", "t1.{{1}}")
         ->RightJoin("{{0}}", "t0.bob", "t1.weasel")
-    ->OUterApply("Cats", [
-        "1asd",
-        "2sgfre",
-        "3fsadfsad"
-    ])
+        ->OUterApply("Cats", [
+            "1asd",
+            "2sgfre",
+            "3fsadfsad"
+        ])
         ->Where("t0.Bob = '{{0}}'")
         ->GroupBy([
             "fish",
@@ -26,17 +26,36 @@
         // ])
     ;
 
+    $Select2 = Select::Start([
+        "*"
+    ])
+    ->From($Select)
+    ->InnerJoin("Cats", "t0.bob", "t1.{{1}}")
+    ->RightJoin("{{0}}", "t0.bob", "t1.weasel")
+    ->OUterApply("Cats", [
+        "1asd",
+        "2sgfre",
+        "3fsadfsad"
+    ])
+    ->Where("t0.Bob = '{{0}}'")
+    ->GroupBy([
+        "fish",
+        "bread"
+    ])
+    ->Having("t1.Bob = 'c@ts'")
+    ->OrderBy([
+        "cheese ASC",
+        "cheese DESC"
+    ]);
+
     echo "-------------------------";
     cout(
-        $Select->Process()
+        $Select->Process(1)
     );
     echo "-------------------------";
     echo "-------------------------";
     cout(
-        $Select->End([
-            "2435432534",
-            "asdfsadfsdfsd"
-        ])
+        $Select2->Process()
     );
     echo "-------------------------";
 
