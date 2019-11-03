@@ -1,6 +1,36 @@
 <?php
 	require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/server/db/Select.php";
+    require_once "{$_SERVER["DOCUMENT_ROOT"]}/server/db/Insert.php";
+	require_once "{$_SERVER["DOCUMENT_ROOT"]}/server/db/Result.php";
+	
+
+	// $r1 = new Result([
+	// 	"A" => 57,
+	// 	546,
+	// 	657,
+	// 	23489
+	// ]);
+	// $r2 = new Result([
+	// 	"asdf",
+	// 	"werds",
+	// 	"vxsadffgser",
+	// 	"2345fsd3c"
+	// ]);
+
+	// $rs = new ResultSet([
+	// 	$r1,
+	// 	$r2
+	// ], [
+	// 	"cat",
+	// 	"dog",
+	// 	"fish",
+	// 	"bird"
+	// ]);
+
+	// cout($r1->A());
+	// cout($rs->Cell(0, "cat"));
+
     
     $Select = Select::Start([
         "{{1}}",
@@ -9,7 +39,7 @@
         ->From("Cats")
         ->InnerJoin("Cats", "t0.bob", "t1.{{1}}")
         ->RightJoin("{{0}}", "t0.bob", "t1.weasel")
-        ->OUterApply("Cats", [
+        ->OuterApply("Cats", [
             "1asd",
             "2sgfre",
             "3fsadfsad"
@@ -26,38 +56,43 @@
         // ])
     ;
 
-    $Select2 = Select::Start([
-        "*"
-    ])
-    ->From($Select)
-    ->InnerJoin("Cats", "t0.bob", "t1.{{1}}")
-    ->RightJoin("{{0}}", "t0.bob", "t1.weasel")
-    ->OUterApply("Cats", [
-        "1asd",
-        "2sgfre",
-        "3fsadfsad"
-    ])
-    ->Where("t0.Bob = '{{0}}'")
-    ->GroupBy([
-        "fish",
-        "bread"
-    ])
-    ->Having("t1.Bob = 'c@ts'")
-    ->OrderBy([
-        "cheese ASC",
-        "cheese DESC"
-    ]);
+    echo "-------------------------";
+    cout(
+        $Select->Process()
+    );
+    echo "-------------------------";
+	
+    $Insert = Insert::Start("Cats", [
+		"cat",
+		"dog"
+	])
+		// ->From("Cats")
+		// ->InnerJoin("Cats", "t0.bob", "t1.{{1}}")
+		// ->RightJoin("{{0}}", "t0.bob", "t1.weasel")
+		// ->OUterApply("Cats", [
+		// 	"1asd",
+		// 	"2sgfre",
+		// 	"3fsadfsad"
+		// ])
+		// ->Where("t0.Bob = '{{0}}'")
+		// ->GroupBy([
+		// 	"fish",
+		// 	"bread"
+		// ]);
+		// ->From($Select)
+		->Values([
+			1, 2, 3
+		]);
+		// ->Values([
+		// 	[ 1, 2, 3 ],
+		// 	[ 4, 5, 6 ]
+		// ]);
 
     echo "-------------------------";
     cout(
-        $Select->Process(1)
+        $Insert->Process()
     );
-    echo "-------------------------";
-    echo "-------------------------";
-    cout(
-        $Select2->Process()
-    );
-    echo "-------------------------";
+	echo "-------------------------";
 
 	// $router = new Router(new Request);
 

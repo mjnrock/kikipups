@@ -3,7 +3,7 @@
         public $Query = "";
         public $Columns = [];
         public $From = [];
-        public $Where = [];
+		public $Where = [];		
         public $GroupBy = [];
         public $Having = [];
         public $Order = [];
@@ -17,6 +17,22 @@
 
             return $this;
         }
+        protected function _select($indent = 0) {
+            $tabs = $this->_tabs($indent);
+            
+            $query = "{$tabs}SELECT";
+            foreach($this->Columns as $i => $col) {
+                if($i === 0) {
+                    $query .= "\n{$tabs}\t" . $col;
+                } else {
+                    $query .= "\n{$tabs}\t," . $col;
+                }
+            }
+
+            return $query . "\n";
+        }
+		
+		
         protected function _tabs($indent = 0) {
             $tabs = "";
 
@@ -26,22 +42,17 @@
 
             return $tabs;
         }
-        protected function _select($indent = 0) {
-            $tabs = $this->_tabs($indent);
-            
-            $query = "{$tabs}SELECT";
-            foreach($this->Columns as $i => $col) {
-                if($i === 0) {
-                    $query .= "\n{$tabs}\t" . $col;
-                } else {
-                    $query .= "\n{$tabs}\t" . $col;
+        protected function _interpolate($params = []) {
+            if(is_array($params) && !empty($params)) {
+                foreach($params as $i => $param) {
+                    $this->Query = preg_replace("/\{\{[{$i}]}}/m", $param, $this->Query);
                 }
             }
 
-            return $query . "\n";
-        }
-
-        protected function _addTable($table, $joinType, $left, $right) {
+            return $this->Query;
+		}
+		
+		protected function _addTable($table, $joinType, $left, $right) {
             if(is_string($table) || $table instanceof Select) {
                 array_push($this->From, [
                     [
@@ -93,7 +104,7 @@
 
             return $this;
         }
-        protected function _from($indent = 0) {
+        protected function _from($indent = 0, $aliased = true) {
             $tabs = $this->_tabs($indent);
 
             $query = "{$tabs}FROM";
@@ -101,14 +112,14 @@
                 if($i === 0) {
                     $item = "";
                     if($table[ 0 ][ "type" ] === "CLASS" && $table[ 0 ][ "name" ] instanceof Select) {
-                        $item .= "{$tabs}\t(\n"
+                        $item .= "\t(\n"
                             . $table[ 0 ][ "name" ]->Process($indent + 2)
                             . "{$tabs}\t)";
                     } else {
                         $item = "\t" . $table[ 0 ][ "name" ];
                     }
 
-                    $query .= "\n{$tabs}" . $item . " t{$i}";
+                    $query .= "\n{$tabs}" . $item;
                 } else {
                     if($table[ 0 ][ "type" ] === "CLASS" && $table[ 0 ][ "name" ] instanceof Select) {
                         //  TODO
@@ -135,11 +146,13 @@
                                 
                                 $query .= ")";
                             }
-
-                            $query .= " t{$i}";
                         }
                     }
                 }
+
+				if($aliased === true) {
+					$query .= " t{$i}";
+				}
             }
 
             return $query . "\n";
@@ -166,9 +179,8 @@
             }
 
             return null;
-        }
-
-        public function GroupBy($columns = []) {
+		}
+		public function GroupBy($columns = []) {
             if(is_array($columns) && !empty($columns)) {
                 $this->GroupBy = $columns;
             }
@@ -214,7 +226,7 @@
             }
 
             return null;
-        }
+		}		
 
         public function OrderBy($columns = []) {
             if(is_array($columns) && !empty($columns)) {
@@ -243,16 +255,6 @@
             return null;
         }
         
-
-        protected function _interpolate($params = []) {
-            if(is_array($params) && !empty($params)) {
-                foreach($params as $i => $param) {
-                    $this->Query = preg_replace("/\{\{[{$i}]}}/m", $param, $this->Query);
-                }
-            }
-
-            return $this->Query;
-        }
         public function Process($indent = 0) {
             $query = $this->_select($indent);
             $query .= $this->_from($indent);
@@ -266,7 +268,7 @@
         
         public static function Start($columns = [ "*" ]) {
             return new Select($columns);
-        }
+		}
         public function End($params = []) {
             $this->Query = $this->Process();
 
