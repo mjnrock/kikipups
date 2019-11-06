@@ -27,12 +27,10 @@
         let keymask = 0;
         let layer = 0;
 
-        //?  .removeLayer does not redraw automatically
         $(document).on("click", "#story-frame-layers-delete > button", function(e) {
             $("#story-frame").removeLayer(+$(this).attr("i")).drawLayers();
         });
 
-        //?  Layer indexes seem to be added to the front of array, not the end (i.e. newest layer = index:0)
         $(document).on("click", "#story-frame-layers > button", function(e) {
             layer = +$(this).attr("i");
 
@@ -41,14 +39,14 @@
             });
             $(this).addClass("active");
             
-            for(let i = 0; i < $("#story-frame").getLayers(); i++) {
+            for(let i = 0; i < $("#story-frame").getLayers().length; i++) {
                 if(layer === i) {
                     $("#story-frame").setLayer(layer, {
-                        intangible: true
+                        intangible: false
                     });
                 } else {
                     $("#story-frame").setLayer(i, {
-                        intangible: false
+                        intangible: true
                     });
                 }
             }
