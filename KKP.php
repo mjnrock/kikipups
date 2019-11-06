@@ -15,12 +15,21 @@
     <button i="2" class="btn btn-outline-secondary">2</button>
 </div>
 
+<div id="story-frame-layers-delete" class="btn-group">
+    <button i="0" class="btn btn-danger active">0</button>
+    <button i="1" class="btn btn-danger">1</button>
+    <button i="2" class="btn btn-danger">2</button>
+</div>
+
 <script>
     $(document).ready(function() {
         let mousemask = 0;
         let keymask = 0;
         let layer = 0;
-        let layers = 3;
+
+        $(document).on("click", "#story-frame-layers-delete > button", function(e) {
+            $("#story-frame").removeLayer(+$(this).attr("i")).drawLayers();
+        });
 
         $(document).on("click", "#story-frame-layers > button", function(e) {
             layer = +$(this).attr("i");
@@ -30,7 +39,7 @@
             });
             $(this).addClass("active");
             
-            for(let i = 0; i < layers; i++) {
+            for(let i = 0; i < $("#story-frame").getLayers(); i++) {
                 if(layer === i) {
                     $("#story-frame").setLayer(layer, {
                         intangible: true
