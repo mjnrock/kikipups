@@ -107,15 +107,7 @@
             mousemask = 0;
         });
         $(document).on("mousemove", "#story-frame", function(e) {
-            if(mousemask && (Math.random() * 100 >= 10)) {
-                let rect = e.target.getBoundingClientRect(),
-                    dx = e.clientX - rect.left,
-                    dy = e.clientY - rect.top;
-                    
-                $("#story-frame").setLayer(layer, {
-                    intangible: true
-                }).drawLayers();
-            }
+            
         });
 
         // let scale = [
