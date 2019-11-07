@@ -13,44 +13,75 @@
     <button i="0" class="btn btn-outline-secondary active">0</button>
     <button i="1" class="btn btn-outline-secondary">1</button>
     <button i="2" class="btn btn-outline-secondary">2</button>
+    <button i="3" class="btn btn-outline-secondary">3</button>
 </div>
 
 <div id="story-frame-layers-delete" class="btn-group">
     <button i="0" class="btn btn-danger active">0</button>
     <button i="1" class="btn btn-danger">1</button>
     <button i="2" class="btn btn-danger">2</button>
+    <button i="3" class="btn btn-danger">3</button>
 </div>
 
 <script>
     $(document).ready(function() {
         let mousemask = 0;
+        let mouse = [ 0, 0 ];
         let keymask = 0;
         let layer = 0;
+
+        function UpdateLayer(jObj, event) {
+            if(typeof jObj === "number") {
+                layer = jObj;
+            } else {
+                layer = +jObj.attr("i");
+            }
+
+            $("#story-frame-layers > button").each(function(i, v) {
+                $(v).removeClass("active");
+            });
+            $(`#story-frame-layers > button[i=${ layer }]`).addClass("active");
+
+            for(let i = 0; i < $("#story-frame").getLayers().length; i++) {
+                if(layer === i) {
+                    $("#story-frame").setLayer(i, {
+                        // intangible: false,
+                        // draggable: true
+                    }).drawLayers();
+                    $("#story-frame").setLayer(i, {
+                        handlePlacement: "both",
+                        resizeFromCenter: false,
+                        handle: {
+                            type: "arc",
+                            fillStyle: "#fff",
+                            strokeStyle: "#337",
+                            strokeWidth: 1,
+                            radius: 10
+                        },
+                        cursors: {
+                            mouseover: "pointer",
+                            mousedown: "move",
+                            mouseup: "pointer"
+                        }
+                    }).drawLayers();
+                } else {
+                    $("#story-frame").setLayer(i, {
+                        // intangible: true,
+                        // draggable: false,
+                        handlePlacement: "none",
+                        handle: {}
+                    }).drawLayers();
+                }
+            }
+            $("#story-frame").drawLayers();
+        }
 
         $(document).on("click", "#story-frame-layers-delete > button", function(e) {
             $("#story-frame").removeLayer(+$(this).attr("i")).drawLayers();
         });
 
         $(document).on("click", "#story-frame-layers > button", function(e) {
-            layer = +$(this).attr("i");
-
-            $("#story-frame-layers > button").each(function(i, v) {
-                $(v).removeClass("active");
-            });
-            $(this).addClass("active");
-            
-            for(let i = 0; i < $("#story-frame").getLayers().length; i++) {
-                if(layer === i) {
-                    $("#story-frame").setLayer(layer, {
-                        intangible: false
-                    });
-                } else {
-                    $("#story-frame").setLayer(i, {
-                        intangible: true
-                    });
-                }
-            }
-            $("#story-frame").drawLayers();
+            UpdateLayer($(this), e);
         });
 
         $("#story-frame").drawText({
@@ -63,11 +94,8 @@
             fontSize: 48,
             fontFamily: "Verdana, sans-serif",
             text: "Hello",
-            scale: 1.0,
-            cursors: {
-                mouseover: 'pointer',
-                mousedown: 'move',
-                mouseup: 'pointer'
+            mousedown: function(e) {
+                UpdateLayer(e.index, e);
             }
         });
         $("#story-frame").drawImage({
@@ -76,10 +104,20 @@
             source: "./assets/images/raccoon.png",
             x: 150,
             y: 150,
-            cursors: {
-                mouseover: 'pointer',
-                mousedown: 'move',
-                mouseup: 'pointer'
+            rotate: 45,
+            mousedown: function(e) {
+                UpdateLayer(e.index, e);
+            }
+        });
+        $("#story-frame").drawImage({
+            layer: true,
+            draggable: true,
+            source: "./assets/images/pusheen.png",
+            x: 150,
+            y: 150,
+            rotate: 45,
+            mousedown: function(e) {
+                UpdateLayer(e.index, e);
             }
         });
         $("#story-frame").drawText({
@@ -92,12 +130,18 @@
             fontSize: 48,
             fontFamily: "Verdana, sans-serif",
             text: "Test",
-            scale: 1.0,
-            cursors: {
-                mouseover: 'pointer',
-                mousedown: 'move',
-                mouseup: 'pointer'
+            mousedown: function(e) {
+                UpdateLayer(e.index, e);
             }
+        });
+
+        $(document).on("keydown", "html", function(e) {
+            if(e.originalEvent.shiftKey) {
+                keymask = 1;
+            }
+        });
+        $(document).on("keyup", "html", function(e) {
+            keymask = 0;
         });
 
         $(document).on("mousedown", "#story-frame", function(e) {
@@ -107,7 +151,17 @@
             mousemask = 0;
         });
         $(document).on("mousemove", "#story-frame", function(e) {
-            
+            // console.log(e.originalEvent.clientY - e.target.offsetTop);
+            let md = [ e.originalEvent.clientX - e.target.offsetLeft - mouse[0], e.originalEvent.clientY - e.target.offsetTop - mouse[1] ];
+            let dir = md[1] < 0 ? -1 : 1;
+
+            if(mousemask && keymask) {
+                $("#story-frame").setLayer(layer, {
+                    rotate: `+=${ dir * (Math.sqrt(Math.pow(md[0], 2) + Math.pow(md[1], 2))) }`
+                }).drawLayers();
+            }
+
+            mouse = [ e.originalEvent.clientX - e.target.offsetLeft, e.originalEvent.clientY - e.target.offsetTop ];
         });
 
         // let scale = [
