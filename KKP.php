@@ -26,6 +26,7 @@
 </div>
 
 <script>
+    //TODO: Allow for Canvas clicks (when no layers are hit), to set the active layer to null, but still let layer clicks to make active
     $(document).ready(function() {
         let imageLoader = document.getElementById("imageLoader");
             imageLoader.addEventListener("change", handleImage, false);
