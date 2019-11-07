@@ -2,6 +2,8 @@
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
 ?>
     
+<input type="file" id="imageLoader" name="imageLoader" />
+
 <canvas
     id="story-frame"
     width="500"
@@ -25,10 +27,48 @@
 
 <script>
     $(document).ready(function() {
+        let imageLoader = document.getElementById("imageLoader");
+            imageLoader.addEventListener("change", handleImage, false);
+
         let mousemask = 0;
         let mouse = [ 0, 0 ];
         let keymask = 0;
         let layer = 0;
+
+        function handleImage(e){
+            let reader = new FileReader();
+
+            reader.onload = function(event){
+                let img = new Image();
+
+                img.onload = function(){
+                    $("#story-frame").drawImage({
+                        layer: true,
+                        draggable: true,
+                        source: img,
+                        x: 150,
+                        y: 150,
+                        mousedown: function(e) {
+                            UpdateLayer(e.index, e);
+                        }
+                    });
+
+                    LayerButtons();
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);     
+        }
+
+        function LayerButtons() {
+            $("#story-frame-layers").empty();
+            $("#story-frame-layers-delete").empty();
+
+            for(let i = 0; i < $("#story-frame").getLayers().length; i++) {
+                $("#story-frame-layers").append(`<button i="${ i }" class="btn btn-outline-secondary ${ layer === i ? "active" : "" }">${ i }</button>`);
+                $("#story-frame-layers-delete").append(`<button i="${ i }" class="btn btn-danger ${ layer === i ? "active" : "" }">${ i }</button>`);
+            }
+        }
 
         function UpdateLayer(jObj, event) {
             if(typeof jObj === "number") {
