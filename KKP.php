@@ -55,9 +55,6 @@
                     });
 
                     LayerButtons();
-
-                    img.width = 150;
-                    img.height = 150;
                 }
                 img.src = event.target.result;
             }
