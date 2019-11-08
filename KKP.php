@@ -36,8 +36,7 @@
         let keymask = 0;
         let layer = 0;
 
-        //! Something is causing multiple Layers to be added with no "source" property and "text" set to ""
-        //? Appears to be reproducible by: 1) Add file, 2) Move new image layer, 3) Add file again, after which several Layers will have been created
+        //? It appears that the extra layers are being caused by the Handler plugin.  Use LayerGroup if need to circumvent .length issues
         function handleImage(e){
             let reader = new FileReader();
 
@@ -45,8 +44,8 @@
                 let img = new Image();
 
                 img.onload = function() {
-                    $("#story-frame").drawImage({
-                        layer: true,
+                    $("#story-frame").addLayer({
+                        type: "image",
                         draggable: true,
                         source: img,
                         width: 150,
@@ -67,7 +66,6 @@
             $("#story-frame-layers").empty();
             $("#story-frame-layers-delete").empty();
 
-            console.log($("#story-frame").getLayers());
             for(let i = 0; i < $("#story-frame").getLayers().length; i++) {
                 $("#story-frame-layers").append(`<button i="${ i }" class="btn btn-outline-secondary ${ layer === i ? "active" : "" }">${ i }</button>`);
                 $("#story-frame-layers-delete").append(`<button i="${ i }" class="btn btn-danger ${ layer === i ? "active" : "" }">${ i }</button>`);
@@ -81,32 +79,32 @@
                 layer = +jObj.attr("i");
             }
 
-            let layersObj = $("#story-frame").getLayers();
-            for(let i = 0; i < layersObj.length; i++) {
-                if(layer === i) {
-                    $("#story-frame").setLayer(i, {
-                        handlePlacement: "both",
-                        resizeFromCenter: false,
-                        handle: {
-                            type: "arc",
-                            fillStyle: "#fff",
-                            strokeStyle: "#337",
-                            strokeWidth: 1,
-                            radius: 10
-                        },
-                        cursors: {
-                            mouseover: "pointer",
-                            mousedown: "move",
-                            mouseup: "pointer"
-                        }
-                    })
-                } else {
-                    $("#story-frame").setLayer(i, {
-                        handlePlacement: "none",
-                        handle: {}
-                    })
+            $("#story-frame").setLayers({
+                draggable: false,
+                handlePlacement: "none",
+                resizeFromCenter: false,
+                handle: {}
+            });
+            $("#story-frame").setLayers({
+                draggable: true,
+                handlePlacement: "both",
+                resizeFromCenter: false,
+                handle: {
+                    type: "rectangle",
+                    fillStyle: "#fff",
+                    strokeStyle: "#337",
+                    strokeWidth: 1,
+                    width: 10,
+                    height: 10
+                },
+                cursors: {
+                    mouseover: "pointer",
+                    mousedown: "move",
+                    mouseup: "pointer"
                 }
-            }
+            }, function(l) {
+                return l.index === layer;
+            });
 
             $("#story-frame").drawLayers();
         }
@@ -123,8 +121,8 @@
             }
         });
 
-        $("#story-frame").drawText({
-            layer: true,
+        $("#story-frame").addLayer({
+            type: "text",
             draggable: true,
             fillStyle: "#9cf",
             strokeStyle: "#25a",
@@ -133,12 +131,12 @@
             fontSize: 48,
             fontFamily: "Verdana, sans-serif",
             text: "Hello",
-            mousedown: function(e) {
+            click: function(e) {
                 UpdateLayer(e.index, e);
             }
         });
-        $("#story-frame").drawImage({
-            layer: true,
+        $("#story-frame").addLayer({
+            type: "image",
             draggable: true,
             source: "./assets/images/raccoon.png",
             x: 150,
@@ -148,31 +146,35 @@
                 UpdateLayer(e.index, e);
             }
         });
-        $("#story-frame").drawImage({
-            layer: true,
-            draggable: true,
-            source: "./assets/images/pusheen.png",
-            x: 150,
-            y: 150,
-            rotate: 45,
-            mousedown: function(e) {
-                UpdateLayer(e.index, e);
-            }
-        });
-        $("#story-frame").drawText({
-            layer: true,
-            draggable: true,
-            fillStyle: "#9cf",
-            strokeStyle: "#25a",
-            strokeWidth: 2,
-            x: 150, y: 100,
-            fontSize: 48,
-            fontFamily: "Verdana, sans-serif",
-            text: "Test",
-            mousedown: function(e) {
-                UpdateLayer(e.index, e);
-            }
-        });
+        // $("#story-frame").drawImage({
+        //     groups: [ "canvas" ],
+        //     index: 3,
+        //     layer: true,
+        //     draggable: true,
+        //     source: "./assets/images/pusheen.png",
+        //     x: 150,
+        //     y: 150,
+        //     rotate: 45,
+        //     click: function(e) {
+        //         UpdateLayer(e.index, e);
+        //     }
+        // });
+        // $("#story-frame").drawText({
+        //     groups: [ "canvas" ],
+        //     index: 1,
+        //     layer: true,
+        //     draggable: true,
+        //     fillStyle: "#9cf",
+        //     strokeStyle: "#25a",
+        //     strokeWidth: 2,
+        //     x: 150, y: 100,
+        //     fontSize: 48,
+        //     fontFamily: "Verdana, sans-serif",
+        //     text: "Test",
+        //     click: function(e) {
+        //         UpdateLayer(e.index, e);
+        //     }
+        // });
 
         $(document).on("keydown", "html", function(e) {
             if(e.originalEvent.shiftKey) {
