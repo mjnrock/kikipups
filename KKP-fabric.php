@@ -86,6 +86,16 @@
         //     top: 50
         // });
         // Canvas.add(text);
+
+        //? Free-drawing examples
+        //* Each continuous stroke from "mousedown" to "mouseup" becomes the FabriJSc object (i.e. for dragging, scaling, etc.)
+        // Canvas.isDrawingMode = true;    //* |false| to disable
+        // Canvas.freeDrawingBrush.color = "#3c3";
+        // Canvas.freeDrawingBrush.width = 10;
+        // //  Draw for 5 seconds, then disable for testing
+        // setTimeout(() => {
+        //     Canvas.isDrawingMode = false;
+        // }, 5000);
     });
 </script>
 
