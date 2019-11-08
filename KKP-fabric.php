@@ -6,8 +6,8 @@
 
 <canvas
     id="story-frame"
-    width="350"
-    height="350"
+    width="400"
+    height="700"
     class="ba br2 ml-4 mt-4"
 ></canvas>
 
@@ -19,10 +19,12 @@
         //? Initializing the FabricJS canvas @(elementId)
         let Canvas = new fabric.Canvas("story-frame");
         
+        //? Add change listener to uploader element
         let imageLoader = document.getElementById("imageLoader");
-            imageLoader.addEventListener("change", handleImage, false);
+            imageLoader.addEventListener("change", uploadImage, false);
 
-        function handleImage(e){
+        //? Handle the actual image upload from client and put it into Fabric object on the Canvas
+        function uploadImage(e){
             let reader = new FileReader();
 
             reader.onload = function(event){
@@ -49,6 +51,15 @@
             }
             reader.readAsDataURL(e.target.files[0]);     
         }
+
+        //? Layer manipulation
+        // Canvas.bringToFront(object);
+        // Canvas.bringForward(object);
+        // Canvas.sendToBack(object);
+        // Canvas.sendBackwards(object);
+        //* Secondary methods
+        // Canvas.moveTo(object, index);
+        // object.moveTo(index);
         
         //? Create a FabricJS object
         let rect = new fabric.Rect({
