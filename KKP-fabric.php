@@ -68,6 +68,24 @@
         //     oImg.scale(0.5).set("angle", -45);
         //     Canvas.add(oImg);
         // });
+
+        //? Text examles
+        // let text = new fabric.Text("Lorem ipsum dolor", {
+        //     overline: true,
+        //     underline: true,
+        //     linethrough: true,
+        //     shadow: "rgba(0,0,0,0.3) 5px 5px 5px",
+        //     fontSize: 40,
+        //     fontWeight: "bold",
+        //     fontStyle: "italic",
+        //     fontFamily: "Hoefler Text",
+        //     textAlign: "right",
+        //     fill: "#33c",   //* This is the "text color" (as well as over/under/strike lines)
+        //     angle: 33,
+        //     left: 100,
+        //     top: 50
+        // });
+        // Canvas.add(text);
     });
 </script>
 
