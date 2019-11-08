@@ -37,7 +37,7 @@
                     let dataURL = canvas.toDataURL("image/png");
 
                     fabric.Image.fromURL(dataURL, function(oImg) {
-                        //? Flip image on X or Y axis
+                        //? Flip image on X or Y axis--these are true flips, not rotations
                         // oImg.set("flipX", true);
                         // oImg.set("flipY", true);
                         Canvas.add(oImg);
