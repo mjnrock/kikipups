@@ -37,6 +37,7 @@
         let layer = 0;
 
         //! Something is causing multiple Layers to be added with no "source" property and "text" set to ""
+        //? Appears to be reproducible by: 1) Add file, 2) Move new image layer, 3) Add file again, after which several Layers will have been created
         function handleImage(e){
             let reader = new FileReader();
 
