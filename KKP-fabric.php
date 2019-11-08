@@ -53,12 +53,12 @@
         }
 
         //? Selection methods for event handling or at a given moment
-        // Canvas.on("object:selected"...) appears to fire once if consecutive objects are selected--must click raw canvas to force event to fire
-        console.log(Canvas.getActiveObject());
-        function onObjectSelected(e) {
-            console.log(e);
-        }
-        Canvas.on("object:selected", onObjectSelected);
+        //* Canvas.on("object:selected"...) appears to fire once if consecutive objects are selected--must click raw canvas to force event to fire
+        // console.log(Canvas.getActiveObject());
+        // function onObjectSelected(e) {
+        //     console.log(e);
+        // }
+        // Canvas.on("object:selected", onObjectSelected);
 
         //? Layer manipulation
         // Canvas.bringToFront(object);
