@@ -6,8 +6,8 @@
 
 <canvas
     id="story-frame"
-    width="250"
-    height="250"
+    width="350"
+    height="350"
     class="ba br2 ml-4 mt-4"
 ></canvas>
 
@@ -36,13 +36,14 @@
         let keymask = 0;
         let layer = 0;
 
+        //! Something is causing multiple Layers to be added with no "source" property and "text" set to ""
         function handleImage(e){
             let reader = new FileReader();
 
             reader.onload = function(event){
                 let img = new Image();
 
-                img.onload = function(){
+                img.onload = function() {
                     $("#story-frame").drawImage({
                         layer: true,
                         draggable: true,
@@ -65,6 +66,7 @@
             $("#story-frame-layers").empty();
             $("#story-frame-layers-delete").empty();
 
+            console.log($("#story-frame").getLayers());
             for(let i = 0; i < $("#story-frame").getLayers().length; i++) {
                 $("#story-frame-layers").append(`<button i="${ i }" class="btn btn-outline-secondary ${ layer === i ? "active" : "" }">${ i }</button>`);
                 $("#story-frame-layers-delete").append(`<button i="${ i }" class="btn btn-danger ${ layer === i ? "active" : "" }">${ i }</button>`);
@@ -78,17 +80,9 @@
                 layer = +jObj.attr("i");
             }
 
-            $("#story-frame-layers > button").each(function(i, v) {
-                $(v).removeClass("active");
-            });
-            $(`#story-frame-layers > button[i=${ layer }]`).addClass("active");
-
-            for(let i = 0; i < $("#story-frame").getLayers().length; i++) {
+            let layersObj = $("#story-frame").getLayers();
+            for(let i = 0; i < layersObj.length; i++) {
                 if(layer === i) {
-                    $("#story-frame").setLayer(i, {
-                        // intangible: false,
-                        // draggable: true
-                    }).drawLayers();
                     $("#story-frame").setLayer(i, {
                         handlePlacement: "both",
                         resizeFromCenter: false,
@@ -104,16 +98,15 @@
                             mousedown: "move",
                             mouseup: "pointer"
                         }
-                    }).drawLayers();
+                    })
                 } else {
                     $("#story-frame").setLayer(i, {
-                        // intangible: true,
-                        // draggable: false,
                         handlePlacement: "none",
                         handle: {}
-                    }).drawLayers();
+                    })
                 }
             }
+
             $("#story-frame").drawLayers();
         }
 
