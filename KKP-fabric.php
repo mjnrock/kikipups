@@ -2,6 +2,8 @@
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
 ?>
 
+<input type="file" id="imageLoader" name="imageLoader" />
+
 <canvas
     id="story-frame"
     width="350"
@@ -16,6 +18,37 @@
 
         //? Initializing the FabricJS canvas @(elementId)
         let Canvas = new fabric.Canvas("story-frame");
+        
+        let imageLoader = document.getElementById("imageLoader");
+            imageLoader.addEventListener("change", handleImage, false);
+
+        function handleImage(e){
+            let reader = new FileReader();
+
+            reader.onload = function(event){
+                let img = new Image();                
+
+                img.onload = function() {
+                    let canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    let ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0);
+                    let dataURL = canvas.toDataURL("image/png");
+
+                    fabric.Image.fromURL(dataURL, function(oImg) {
+                        //? Flip image on X or Y axis
+                        // oImg.set("flipX", true);
+                        // oImg.set("flipY", true);
+                        Canvas.add(oImg);
+
+                        delete canvas;
+                    });
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);     
+        }
         
         //? Create a FabricJS object
         let rect = new fabric.Rect({
