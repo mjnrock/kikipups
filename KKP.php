@@ -123,6 +123,10 @@
 
         $(document).on("click", "#story-frame-layers > button", function(e) {
             UpdateLayer($(this), e);
+
+            if(keymask) {
+                $("#story-frame").moveLayer(+$(this).attr("i"), $("#story-frame").getLayers().length);
+            }
         });
 
         $("#story-frame").drawText({
