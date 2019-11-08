@@ -11,6 +11,8 @@
     class="ba br2 ml-4 mt-4"
 ></canvas>
 
+<a class="btn btn-outline-primary" href="" id="download-image" download="filename">Download</a>
+
 <div id="story-frame-layers" class="btn-group">
     <button i="0" class="btn btn-outline-secondary active">0</button>
     <button i="1" class="btn btn-outline-secondary">1</button>
@@ -35,6 +37,8 @@
         let mouse = [ 0, 0 ];
         let keymask = 0;
         let layer = 0;
+
+        $("#story-frame")
 
         //? It appears that the extra layers are being caused by the Handler plugin.  Use LayerGroup if need to circumvent .length issues
         function handleImage(e){
@@ -73,7 +77,7 @@
         }
 
         function UpdateLayer(jObj, event) {
-            if(typeof jObj === "number") {
+            if(typeof jObj === "number" || jObj === null) {
                 layer = jObj;
             } else {
                 layer = +jObj.attr("i");
@@ -109,6 +113,12 @@
             $("#story-frame").drawLayers();
         }
 
+        $(document).on("click", "#download-image", function(e) {
+            UpdateLayer(null);
+
+            $("#download-image").attr("href", $("#story-frame").getCanvasImage("png"));
+        });
+
         $(document).on("click", "#story-frame-layers-delete > button", function(e) {
             $("#story-frame").removeLayer(+$(this).attr("i")).drawLayers();
         });
@@ -122,6 +132,31 @@
         });
 
         $("#story-frame").addLayer({
+            name: "painter",
+            type: "line",
+            strokeWidth: 5,
+            strokeStyle: "#33c",
+            strokeCap: "round",
+            strokeJoin: "round",
+            x1: 50,
+            y1: 50,
+            x2: 250,
+            y2: 250,
+            mousedown: function(lyr) {
+                console.log(lyr);
+                $(this).setLayer("painter", {                    
+                    strokeWidth: 5,
+                    strokeStyle: "#33c",
+                    strokeCap: "round",
+                    strokeJoin: "round",
+                    x1: mouse[ 0 ],
+                    y1: mouse[ 1 ],
+                    x2: lyr.event.originalEvent.clientX - lyr.event.target.offsetLeft,
+                    y2: lyr.event.originalEvent.clientY - lyr.event.target.offsetTop
+                });
+            }
+        });
+        $("#story-frame").addLayer({
             type: "text",
             draggable: true,
             fillStyle: "#9cf",
@@ -131,7 +166,7 @@
             fontSize: 48,
             fontFamily: "Verdana, sans-serif",
             text: "Hello",
-            click: function(e) {
+            mousedown: function(e) {
                 UpdateLayer(e.index, e);
             }
         });
@@ -179,6 +214,8 @@
         $(document).on("keydown", "html", function(e) {
             if(e.originalEvent.shiftKey) {
                 keymask = 1;
+            } else if(e.originalEvent.code === "Escape") {
+                UpdateLayer(null);
             }
         });
         $(document).on("keyup", "html", function(e) {
@@ -197,9 +234,31 @@
             let dir = md[1] < 0 ? -1 : 1;
 
             if(mousemask && keymask) {
-                $("#story-frame").setLayer(layer, {
-                    rotate: `+=${ dir * (Math.sqrt(Math.pow(md[0], 2) + Math.pow(md[1], 2))) }`
-                }).drawLayers();
+                //* Rotate layer
+                // $("#story-frame").setLayer(layer, {
+                //     rotate: `+=${ dir * (Math.sqrt(Math.pow(md[0], 2) + Math.pow(md[1], 2))) }`
+                // }).drawLayers();
+
+                // $("#story-frame").drawArc({
+                //     fillStyle: "#33c",
+                //     x: e.originalEvent.clientX - e.target.offsetLeft,
+                //     y: e.originalEvent.clientY - e.target.offsetTop,
+                //     radius: 5,
+                //     start: 0,
+                //     end: 360
+                // });
+
+                // let painter = $("#story-frame").getLayer("painter");
+                // .drawLine({
+                //     strokeWidth: 5,
+                //     strokeStyle: "#33c",
+                //     strokeCap: "round",
+                //     strokeJoin: "round",
+                //     x1: mouse[ 0 ],
+                //     y1: mouse[ 1 ],
+                //     x2: e.originalEvent.clientX - e.target.offsetLeft,
+                //     y2: e.originalEvent.clientY - e.target.offsetTop
+                // }).drawLayers();
             }
 
             mouse = [ e.originalEvent.clientX - e.target.offsetLeft, e.originalEvent.clientY - e.target.offsetTop ];
