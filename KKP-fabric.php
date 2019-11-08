@@ -13,8 +13,8 @@
 
 <script>
     $(document).ready(function() {
-        //! Don't delete these comments/examples like you usually do, the FabricJS documentation is shit
-        //! If truly tempted to delete, send these to a separate "notes" file, instead--coming back to this after days/weeks is a bitch and you'll need it
+        //! Don"t delete these comments/examples like you usually do, the FabricJS documentation is shit
+        //! If truly tempted to delete, send these to a separate "notes" file, instead--coming back to this after days/weeks is a bitch and you"ll need it
 
         //? Initializing the FabricJS canvas @(elementId)
         let Canvas = new fabric.Canvas("story-frame");
@@ -65,9 +65,9 @@
         let rect = new fabric.Rect({
             left: 100,
             top: 100,
-            fill: 'red',
-            width: 20,
-            height: 20,
+            fill: "red",
+            width: 100,
+            height: 100,
             angle: 45
         });
 
