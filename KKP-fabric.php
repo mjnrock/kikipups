@@ -60,6 +60,14 @@
         //         console.log(e);
         //     }
         // });
+
+        //? Add image to Canvas
+        //*  .fromURL(otherCanvas.toDataURL(), ...)
+        // fabric.Image.fromURL("./assets/images/raccoon.png", function(oImg) {
+        //     // Scale image and rotate -45 degrees
+        //     oImg.scale(0.5).set("angle", -45);
+        //     Canvas.add(oImg);
+        // });
     });
 </script>
 
