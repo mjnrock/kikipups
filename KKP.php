@@ -6,8 +6,8 @@
 
 <canvas
     id="story-frame"
-    width="500"
-    height="500"
+    width="250"
+    height="250"
     class="ba br2 ml-4 mt-4"
 ></canvas>
 
@@ -47,14 +47,17 @@
                         layer: true,
                         draggable: true,
                         source: img,
-                        x: 150,
-                        y: 150,
+                        width: 150,
+                        height: 150,
                         mousedown: function(e) {
                             UpdateLayer(e.index, e);
                         }
                     });
 
                     LayerButtons();
+
+                    img.width = 150;
+                    img.height = 150;
                 }
                 img.src = event.target.result;
             }
