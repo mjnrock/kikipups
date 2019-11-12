@@ -7,6 +7,7 @@
         position: relative;
         overflow: hidden;
         margin: 0;
+        cursor: pointer;
     }
     .fileUpload input.upload {
         position: absolute;
@@ -21,26 +22,31 @@
     }
 </style>
 
-<div class="container">
-    <div class="row ba br2">
+<div class="container ba br2">
+    <div class="row">
         <div class="col-6">
             <canvas
                 id="story-frame"
-                class="ba br2 ml-4 mt-4"
+                class="ba br2"
                 width="400"
                 height="700"
             ></canvas>
         </div>
+        
         <div class="col-6">
             <button
                 class="form-control btn btn-outline-secondary mt-2"
                 id="btn-text"
-            >Text</button>
+            >
+                <i class="material-icons">text_fields</i>
+            </button>
             <div
                 class="fileUpload form-control btn btn-outline-secondary mt-2"
                 id="btn-image"
             >
-                <span>File</span>
+                <span>
+                    <i class="material-icons">image</i>
+                </span>
                 <input
                     type="file"
                     id="imageLoader"
@@ -50,7 +56,71 @@
             <button
                 class="form-control btn btn-outline-secondary mt-2"
                 id="btn-draw"
-            >Draw</button>
+            >
+                <i class="material-icons">create</i>
+            </button>
+
+            <div id="draw-tools" class="container" style="display: none;">
+                <div class="row mt4">
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-white ba br-1"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FFFFFF"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-black"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="000000"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-red"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FF4136"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-green"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="19A974"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-blue"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="357EDD"
+                        >&nbsp;</span>
+                    </div>
+                </div>
+
+                <div class="row mt4">
+                    <div class="col-10">
+                        <div id="draw-size"></div>
+                    </div>
+                    <div class="col-2">
+                        <span
+                            id="draw-size-demo"
+                            class="br-100"
+                            style="display: inline-block"
+                            hex="357EDD"
+                        >&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <button
+                class="form-control btn btn-danger"
+                id="btn-delete"
+            >
+                <i class="material-icons">delete_forever</i>
+            </button>
         </div>
     </div>
 </div>
@@ -80,6 +150,9 @@
         // });
         
         let Canvas = new fabric.Canvas("story-frame");
+        let isDrawMode = false;
+        let drawColor = "#000";
+        let drawSize = 25;
 
         //? Add change listener to uploader element
         let imageLoader = document.getElementById("imageLoader");
@@ -113,13 +186,59 @@
             }
             reader.readAsDataURL(e.target.files[0]);     
         }
+
+        function updateDrawSizeDemo() {
+            // let width = +$("#draw-size-demo").css("width"),
+            //     height = +$("#draw-size-demo").css("height");
+
+            $("#draw-size-demo").css("background-color", drawColor);
+            $("#draw-size-demo").css("width", drawSize);
+            $("#draw-size-demo").css("height", drawSize);
+            
+            Canvas.freeDrawingBrush.color = drawColor;
+            Canvas.freeDrawingBrush.width = drawSize;
+        }
+        $("#draw-size").slider({
+            value: drawSize,
+            min: 1,
+            max: 50,
+            slide: function(event, ui) {
+                drawSize = +ui.value;
+
+                $("#draw-size").val(drawSize);
+                
+                updateDrawSizeDemo();
+            }
+        });
+
+        $(document).on("click", ".draw-color-choice", function(e) {
+            drawColor = `#${ $(this).attr("hex") }`;
+
+            updateDrawSizeDemo();
+        });
         
+        $(document).on("click", "#btn-delete", function(e) {
+            Canvas.remove(Canvas.getActiveObject());
+        });
         $(document).on("click", "#btn-text", function(e) {
             let text = new fabric.Textbox("Lorem ipsum dolor", {
                 textAlign: "center",
                 fill: "#000"   //* This is the "text color" (as well as over/under/strike lines)
             });
             Canvas.add(text);
+        });
+        $(document).on("click", "#btn-draw", function(e) {
+            isDrawMode = !isDrawMode;
+            
+            $(this).toggleClass("active");
+
+            Canvas.isDrawingMode = isDrawMode;
+
+            if(isDrawMode) {
+                $("#draw-tools").show();
+            } else {
+                $("#draw-tools").hide();
+            }
         });
 
         // $(document).on("click", "#btn-image", function(e) {
