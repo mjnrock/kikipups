@@ -22,7 +22,7 @@
     }
 </style>
 
-<div class="container ba br2">
+<div class="container ba br2 pa3">
     <div class="row">
         <div class="col-6">
             <canvas
@@ -64,13 +64,6 @@
                 <div class="row mt4">
                     <div class="col">
                         <span
-                            class="draw-color-choice br-100 bg-white ba br-1"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FFFFFF"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
                             class="draw-color-choice br-100 bg-black"
                             style="display: inline-block; width: 48px; height: 48px;"
                             hex="000000"
@@ -97,13 +90,99 @@
                             hex="357EDD"
                         >&nbsp;</span>
                     </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-yellow"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FFD700"
+                        >&nbsp;</span>
+                    </div>
                 </div>
 
+
                 <div class="row mt4">
-                    <div class="col-10">
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-white ba br-1"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FFFFFF"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-light-red"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FF725C"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-light-green"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="9EEBCF"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-light-blue"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="96CCFF"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-light-yellow"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FBF1A9"
+                        >&nbsp;</span>
+                    </div>
+                </div>
+
+
+                <div class="row mt4">
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-moon-gray ba br1"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="CCCCCC"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-washed-red ba br1"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FFDFDF"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-washed-green ba br1"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="E8FDF5"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-washed-blue ba br1"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="F6FFFE"
+                        >&nbsp;</span>
+                    </div>
+                    <div class="col">
+                        <span
+                            class="draw-color-choice br-100 bg-washed-yellow ba br1"
+                            style="display: inline-block; width: 48px; height: 48px;"
+                            hex="FFFCEB"
+                        >&nbsp;</span>
+                    </div>
+                </div>
+
+
+                <div class="row mt4">
+                    <div class="col-9">
                         <div id="draw-size"></div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <span
                             id="draw-size-demo"
                             class="br-100"
@@ -201,7 +280,7 @@
         $("#draw-size").slider({
             value: drawSize,
             min: 1,
-            max: 50,
+            max: 100,
             slide: function(event, ui) {
                 drawSize = +ui.value;
 
