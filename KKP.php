@@ -101,6 +101,12 @@
             >
                 <i class="material-icons">camera_alt</i>
             </button>
+            <button
+                class="form-control btn btn-primary mt-2"
+                id="btn-download"
+            >
+                <i class="material-icons">file_download</i>
+            </button>
 
             <div class="toolsets">
                 <div id="text-tools" style="display: none;">
@@ -430,7 +436,9 @@
             }
         });
         emojiPicker.on("emoji", emoji => {
-            let text = new fabric.Textbox(emoji);
+            let text = new fabric.Textbox(emoji, {
+                fontSize: 80
+            });
 
             Canvas.add(text);
         });
@@ -621,6 +629,13 @@
             }
         });
         
+        $(document).on("click", "#btn-download", function(e) {
+            window.open(Canvas.toDataURL({
+                format: "png",
+                quality: 1.0
+            })); 
+        });
+
         $(document).on("click", "#btn-background-color", function(e) {
             $("#background-color")[0].click();
         });
