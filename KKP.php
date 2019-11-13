@@ -794,13 +794,12 @@
             }
         });
 
-        
+
+        //? To save editable GIFs, create a JSON file that takes the Canvases JSON data and saves that, instead/also        
         $(document).on("click", "#btn-make-gif", function(e) {
             let images = [],
                 _tempCanvas = new fabric.Canvas();
 
-            //! It appears that the image is being rescaled and thus rasterized and thus losing substantial quality
-            //TODO Use FabricJS Canvas to repopulate the image from JSON, .toDataURL(), _then_ push into @images array
             $(".story-frame-container img").each(function(e, v) {
                 let json = Canvases[ $(v).parent().parent().attr("uuid") ];
                 _tempCanvas.loadFromJSON(json, function() {
@@ -815,12 +814,6 @@
                         quality: 1.0
                     }));
                 });
-
-
-                // let uuid = $(v).attr("uuid");
-
-                // _tempCanvas.fromURL(Canvases[ uuid ]
-                // images.push(v.src);
             });
 
             gifshot.createGIF({
