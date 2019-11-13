@@ -70,6 +70,12 @@
             >
                 <i class="material-icons">text_fields</i>
             </button>
+            <button
+                class="form-control btn btn-outline-secondary mt-2"
+                id="btn-emoji"
+            >
+                😀
+            </button>
             <div
                 class="fileUpload form-control btn btn-outline-secondary mt-2"
                 id="btn-image"
@@ -149,7 +155,7 @@
                                 </button>
                                 <button
                                     class="text-button btn btn-outline-secondary pa3 pb1"
-                                    action="align-justified"
+                                    action="align-justify"
                                 >
                                     <i class="material-icons">format_align_justify</i>
                                 </button>
@@ -384,17 +390,16 @@
 
 
 <script>
-
     $(document).ready(function() {
         // $("#modal-text").modal({
         //     show: false
         // });
         
-        let video = document.getElementById("user-video"),
+        const video = document.getElementById("user-video"),
             videoCanvas = document.getElementById("video-canvas"),
             videoContext = videoCanvas.getContext("2d");
         
-        let Canvas = new fabric.Canvas("story-frame");
+        const Canvas = new fabric.Canvas("story-frame");
         let isDrawMode = false;
         let drawColor = "#000";
         let drawSize = 25;
@@ -403,6 +408,34 @@
             "selection:updated": canvasObjectSelectHandler,
             "selection:created": canvasObjectSelectHandler,
             "selection:cleared": (e) => canvasObjectSelectHandler(e, true)
+        });
+        
+        const emojiPicker = new EmojiButton({
+            autoHide: true,
+
+            i18n: {
+                search: 'Search',
+                categories: {
+                    recents: 'Recently Used',
+                    smileys: 'Smileys & People',
+                    animals: 'Animals & Nature',
+                    food: 'Food & Drink',
+                    activities: 'Activities',
+                    travel: 'Travel & Places',
+                    objects: 'Objects',
+                    symbols: 'Symbols',
+                    flags: 'Flags'
+                },
+                notFound: 'No emojis found'
+            }
+        });
+        emojiPicker.on('emoji', emoji => {
+            let text = new fabric.Textbox(emoji);
+
+            Canvas.add(text);
+        });
+        $(document).on("click", "#btn-emoji", function(e) {
+            emojiPicker.pickerVisible ? emojiPicker.hidePicker() : emojiPicker.showPicker($("#btn-emoji"));
         });
 
         function canvasObjectSelectHandler(e, clear = false) {
@@ -436,7 +469,6 @@
         }
         $(document).on("change", "#text-color", updateTextColor);
         $(document).on("change", "#background-color", function(e) {    
-            console.log(e.target.value);
             Canvas.set({
                 backgroundColor: e.target.value
             });
@@ -534,7 +566,6 @@
                     "linethrough": (test) => [ `linethrough`, test === true, `true`, null ]
                 };
 
-            console.log(action, action.startsWith("align"), action.split("-"));
             if(layer) {
                 for(let tx in map) {
                     if(action === tx) {
@@ -577,9 +608,8 @@
             Canvas.remove(Canvas.getActiveObject());
         });
         $(document).on("click", "#btn-text", function(e) {
-            let text = new fabric.Textbox("Lorem ipsum dolor", {
-                textAlign: "center",
-                fill: "#000"   //* This is the "text color" (as well as over/under/strike lines)
+            let text = new fabric.Textbox("Text", {
+                fill: "#000"
             });
             Canvas.add(text);
         });
@@ -622,10 +652,6 @@
         $(document).on("click", "#stop-user-video", function(e) {
             video.srcObject.getTracks().forEach(track => track.stop());
         });
-
-        // $(document).on("click", "#btn-image", function(e) {
-        //     $("#imageLoader").trigger("change");
-        // });        
     });
 </script>
 
