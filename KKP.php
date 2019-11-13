@@ -1,5 +1,7 @@
 <?php
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/views/_header.php";
+
+    //! GIFSHOT (MIT):  https://github.com/yahoo/gifshot
 ?>
 
 <style>
@@ -46,10 +48,49 @@
         </div>
     </div>
 
+    <div class="row mb4">
+        <div class="col">
+            <div class="form-control-group mb4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <i class="input-group-text material-icons">av_timer</i>
+                    </div>
+                    <input id="gif-interval" type="number" class="form-control" name="gif-interval" min="0.1" max="5" step="0.1" value="1.0" />
+                </div>
+
+                <button id="btn-make-gif" class="form-control mt2 btn btn-success">
+                    <i class="material-icons">gif</i>
+                </button>
+            </div>
+
+            <ul class="story-frame-container">
+                <li class="story-frame">
+                    <div>
+                        <img width="40" height="70"/>
+                    </div>
+
+                    <div class="btn-group">
+                        <button action="c2i" class="btn btn-primary">
+                            <i class="material-icons">publish</i>
+                        </button>
+                        <button action="i2c" class="btn btn-outline-primary">
+                            <i class="material-icons">file_download</i>
+                        </button>
+                        <button action="delete" class="btn btn-danger">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+            
+            <button id="btn-add-frame" class="btn btn-success">+</button>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-6">
             <canvas
-                id="story-frame"
+                id="story-active-frame"
                 class="ba br2"
                 width="400"
                 height="700"
@@ -405,7 +446,7 @@
             videoCanvas = document.getElementById("video-canvas"),
             videoContext = videoCanvas.getContext("2d");
         
-        const Canvas = new fabric.Canvas("story-frame");
+        const Canvas = new fabric.Canvas("story-active-frame");
         let isDrawMode = false;
         let drawColor = "#000";
         let drawSize = 25;
@@ -633,7 +674,7 @@
             window.open(Canvas.toDataURL({
                 format: "png",
                 quality: 1.0
-            })); 
+            }));
         });
 
         $(document).on("click", "#btn-background-color", function(e) {
@@ -687,6 +728,85 @@
         });
         $(document).on("click", "#stop-user-video", function(e) {
             video.srcObject.getTracks().forEach(track => track.stop());
+        });
+
+        $(document).on("click", "#btn-add-frame", function(e) {
+            $(".story-frame-container").append(`
+                <li class="story-frame">
+                    <div>
+                        <img width="40" height="70"/>
+                    </div>
+
+                    <div class="btn-group">
+                        <button action="c2i" class="btn btn-primary">
+                            <i class="material-icons">publish</i>
+                        </button>
+                        <button action="i2c" class="btn btn-outline-primary">
+                            <i class="material-icons">file_download</i>
+                        </button>
+                        <button action="delete" class="btn btn-danger">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </div>
+                </li>
+            `);
+        });
+        
+        function UUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        let Canvases = {};
+        $(document).on("click", ".story-frame button", function(e) {
+            let action = $(this).attr("action"),
+                _li = $(this).parent().parent();
+
+            if(action === "i2c") {
+                let json = Canvases[ _li.attr("uuid") ];
+                Canvas.loadFromJSON(json, function() {
+                    Canvas.renderAll(); 
+                });
+            } else if(action === "c2i") { 
+                _li.find("img").attr("src", Canvas.toDataURL({
+                    format: "png",
+                    quality: 1.0,
+                    multiplier: 0.1
+                }));
+
+                let uuid = UUID();
+                _li.attr("uuid", uuid);
+                Canvases[ uuid ] = Canvas.toJSON();
+            } else if(action === "delete") {
+                delete Canvases[ _li.attr("uuid") ];
+                _li.remove();
+            }
+        });
+
+        
+        $(document).on("click", "#btn-make-gif", function(e) {
+            let images = [];
+
+            $(".story-frame-container img").each(function(e, v) {
+                images.push(v.src);
+            });
+
+            gifshot.createGIF({
+                "images": images,
+                interval: +$("#gif-interval").val()
+            }, function(obj) {
+                if(!obj.error) {
+                    var image = obj.image,
+                    animatedImage = document.createElement("img");
+                    animatedImage.src = image;
+                    document.body.appendChild(animatedImage);
+
+                    //TODO Have a triggering event to perform the open (e.g. button click)
+                    window.open(animatedImage.src);
+                }
+            });
         });
     });
 </script>
