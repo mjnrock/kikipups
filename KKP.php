@@ -414,22 +414,22 @@
             autoHide: true,
 
             i18n: {
-                search: 'Search',
+                search: "Search",
                 categories: {
-                    recents: 'Recently Used',
-                    smileys: 'Smileys & People',
-                    animals: 'Animals & Nature',
-                    food: 'Food & Drink',
-                    activities: 'Activities',
-                    travel: 'Travel & Places',
-                    objects: 'Objects',
-                    symbols: 'Symbols',
-                    flags: 'Flags'
+                    recents: "Recently Used",
+                    smileys: "Smileys & People",
+                    animals: "Animals & Nature",
+                    food: "Food & Drink",
+                    activities: "Activities",
+                    travel: "Travel & Places",
+                    objects: "Objects",
+                    symbols: "Symbols",
+                    flags: "Flags"
                 },
-                notFound: 'No emojis found'
+                notFound: "No emojis found"
             }
         });
-        emojiPicker.on('emoji', emoji => {
+        emojiPicker.on("emoji", emoji => {
             let text = new fabric.Textbox(emoji);
 
             Canvas.add(text);
