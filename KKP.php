@@ -409,8 +409,14 @@
 
             <hr />
             <button
-                class="form-control btn btn-danger"
+                class="form-control btn btn-outline-danger"
                 id="btn-delete"
+            >
+                <i class="material-icons">layers_clear</i>
+            </button>
+            <button
+                class="form-control btn btn-danger mt2"
+                id="btn-clear-canvas"
             >
                 <i class="material-icons">delete_forever</i>
             </button>
@@ -739,6 +745,10 @@
             video.srcObject.getTracks().forEach(track => track.stop());
         });
 
+        $(document).on("click", "#btn-clear-canvas", function(e) {
+            Canvas.clear();
+        });
+
         $(document).on("click", "#btn-add-frame", function(e) {
             $(".story-frame-container").append(`
                 <li class="story-frame">
@@ -795,7 +805,8 @@
         });
 
 
-        //? To save editable GIFs, create a JSON file that takes the Canvases JSON data and saves that, instead/also        
+        //? To save editable GIFs, create a JSON file that takes the Canvases JSON data and saves that, instead/also
+        //FIXME Something is preventing layers with an "Image" in the layer from rendering.  3 layers, 1 with image, only the other 2 will render into GIF
         $(document).on("click", "#btn-make-gif", function(e) {
             let images = [],
                 _tempCanvas = new fabric.Canvas();
