@@ -64,7 +64,7 @@
             </div>
 
             <ul class="story-frame-container">
-                <li class="story-frame">
+                <!-- <li class="story-frame">
                     <div>
                         <img width="40" height="70"/>
                     </div>
@@ -80,7 +80,7 @@
                             <i class="material-icons">delete</i>
                         </button>
                     </div>
-                </li>
+                </li> -->
             </ul>
             
             <button id="btn-add-frame" class="btn btn-success">+</button>
@@ -454,6 +454,12 @@
         let drawColor = "#000";
         let drawSize = 25;
 
+        //? All JS uses this variable, but HTML above has these hardcoded for testing (change when needed)
+        const dimensions = {
+            width: 400,
+            height: 700
+        };
+
         Canvas.on({
             "selection:updated": canvasObjectSelectHandler,
             "selection:created": canvasObjectSelectHandler,
@@ -709,8 +715,8 @@
         $(document).on("click", "#btn-camera", function(e) {
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {                
                 if(video.srcObject && video.srcObject.getTracks().length > 0) {
-                    var hRatio = 400 / video.videoWidth,
-                        vRatio = 700 / video.videoHeight,
+                    var hRatio = dimensions.width / video.videoWidth,
+                        vRatio = dimensions.height / video.videoHeight,
                         ratio  = Math.min(hRatio, vRatio);
 
                     videoContext.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 400, video.videoHeight * vRatio);
@@ -790,18 +796,37 @@
 
         
         $(document).on("click", "#btn-make-gif", function(e) {
-            let images = [];
+            let images = [],
+                _tempCanvas = new fabric.Canvas();
 
             //! It appears that the image is being rescaled and thus rasterized and thus losing substantial quality
             //TODO Use FabricJS Canvas to repopulate the image from JSON, .toDataURL(), _then_ push into @images array
             $(".story-frame-container img").each(function(e, v) {
-                images.push(v.src);
+                let json = Canvases[ $(v).parent().parent().attr("uuid") ];
+                _tempCanvas.loadFromJSON(json, function() {
+                    _tempCanvas.set({
+                        width: dimensions.width,
+                        height: dimensions.height
+                    });
+                    _tempCanvas.renderAll();
+
+                    images.push(_tempCanvas.toDataURL({
+                        format: "png",
+                        quality: 1.0
+                    }));
+                });
+
+
+                // let uuid = $(v).attr("uuid");
+
+                // _tempCanvas.fromURL(Canvases[ uuid ]
+                // images.push(v.src);
             });
 
             gifshot.createGIF({
                 "images": images,
-                gifWidth: 400,
-                gifHeight: 700,
+                gifWidth: dimensions.width,
+                gifHeight: dimensions.height,
                 interval: +$("#gif-interval").val()
             }, function(obj) {
                 if(!obj.error) {
