@@ -87,7 +87,7 @@
                 class="form-control btn btn-outline-secondary mt-2"
                 id="btn-draw"
             >
-                <i class="material-icons">create</i>
+                <i class="material-icons">brush</i>
             </button>
             <button
                 class="form-control btn btn-outline-secondary mt-2"
