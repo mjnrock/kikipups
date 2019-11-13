@@ -23,6 +23,29 @@
 </style>
 
 <div class="container ba br2 pa3">
+    <div class="row mb4">
+        <div class="col">
+            <video id="user-video" width="400" height="700" autoplay></video>
+
+            <div class="btn-group col-12">
+                <button id="stop-user-video" class="btn btn-outline-danger">
+                    <i class="material-icons">stop</i>
+                </button>
+                <button id="draw-user-video" class="btn btn-outline-success">
+                    <i class="material-icons">play_arrow</i>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <canvas
+                id="video-canvas"
+                class="ba br2"
+                width="400"
+                height="700"
+            ></canvas>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-6">
             <canvas
@@ -34,6 +57,13 @@
         </div>
         
         <div class="col-6">
+            <button
+                class="form-control btn btn-outline-secondary mt-2"
+                id="btn-background-color"
+            >
+                <input id="background-color" type="color" hidden />
+                <i class="material-icons">color_lens</i>
+            </button>
             <button
                 class="form-control btn btn-outline-secondary mt-2"
                 id="btn-text"
@@ -59,136 +89,260 @@
             >
                 <i class="material-icons">create</i>
             </button>
+            <button
+                class="form-control btn btn-outline-secondary mt-2"
+                id="btn-camera"
+            >
+                <i class="material-icons">camera_alt</i>
+            </button>
 
-            <div id="draw-tools" class="container" style="display: none;">
-                <div class="row mt4">
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-black"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="000000"
-                        >&nbsp;</span>
+            <div class="toolsets">
+                <div id="text-tools">
+                    <div class="row mt4">
+                        <div class="col">
+                            <div class="btn-group">
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="bold"
+                                >
+                                    <i class="material-icons">format_bold</i>
+                                </button>
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="italic"
+                                >
+                                    <i class="material-icons">format_italic</i>
+                                </button>
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="underline"
+                                >
+                                    <i class="material-icons">format_underlined</i>
+                                </button>
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="linethrough"
+                                >
+                                    <i class="material-icons"><i class="material-icons">strikethrough_s</i></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="btn-group">
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="align-left"
+                                >
+                                    <i class="material-icons">format_align_left</i>
+                                </button>
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="align-center"
+                                >
+                                    <i class="material-icons">format_align_center</i>
+                                </button>
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="align-right"
+                                >
+                                    <i class="material-icons">format_align_right</i>
+                                </button>
+                                <button
+                                    class="text-button btn btn-outline-secondary pa3 pb1"
+                                    action="align-justified"
+                                >
+                                    <i class="material-icons">format_align_justify</i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-red"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FF4136"
-                        >&nbsp;</span>
+
+                    <div class="row mt4">
+                        <div class="offset-sm-2"></div>
+                        <div class="col">
+                            <select id="text-font" class="ba br2 pa3">
+                                <option> Serif </option>
+                                <option> Arial </option>
+                                <option> Sans-Serif </option>                                  
+                                <option> Tahoma </option>
+                                <option> Verdana </option>
+                                <option> Lucida Sans Unicode </option>                               
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input id="text-color" type="color" class="ba br2 pa3 h3" />
+                        </div>
                     </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-green"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="19A974"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-blue"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="357EDD"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-yellow"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FFD700"
-                        >&nbsp;</span>
+
+                    <div class="row mt4">
+                        <div class="col">
+                            <span
+                                class="text-color-choice br-100 bg-black"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="000000"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="text-color-choice br-100 bg-red"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FF4136"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="text-color-choice br-100 bg-green"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="19A974"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="text-color-choice br-100 bg-blue"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="357EDD"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="text-color-choice br-100 bg-yellow"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FFD700"
+                            >&nbsp;</span>
+                        </div>
                     </div>
                 </div>
 
-
-                <div class="row mt4">
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-white ba br-1"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FFFFFF"
-                        >&nbsp;</span>
+                <div id="draw-tools" class="container" style="display: none;">
+                    <div class="row mt4">
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-black"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="000000"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-red"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FF4136"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-green"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="19A974"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-blue"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="357EDD"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-yellow"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FFD700"
+                            >&nbsp;</span>
+                        </div>
                     </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-light-red"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FF725C"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-light-green"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="9EEBCF"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-light-blue"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="96CCFF"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-light-yellow"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FBF1A9"
-                        >&nbsp;</span>
-                    </div>
-                </div>
-
-
-                <div class="row mt4">
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-moon-gray ba br1"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="CCCCCC"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-washed-red ba br1"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FFDFDF"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-washed-green ba br1"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="E8FDF5"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-washed-blue ba br1"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="F6FFFE"
-                        >&nbsp;</span>
-                    </div>
-                    <div class="col">
-                        <span
-                            class="draw-color-choice br-100 bg-washed-yellow ba br1"
-                            style="display: inline-block; width: 48px; height: 48px;"
-                            hex="FFFCEB"
-                        >&nbsp;</span>
-                    </div>
-                </div>
 
 
-                <div class="row mt4">
-                    <div class="col-9">
-                        <div id="draw-size"></div>
+                    <div class="row mt4">
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-white ba br-1"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FFFFFF"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-light-red"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FF725C"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-light-green"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="9EEBCF"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-light-blue"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="96CCFF"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-light-yellow"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FBF1A9"
+                            >&nbsp;</span>
+                        </div>
                     </div>
-                    <div class="col-3">
-                        <span
-                            id="draw-size-demo"
-                            class="br-100"
-                            style="display: inline-block"
-                            hex="357EDD"
-                        >&nbsp;</span>
+
+
+                    <div class="row mt4">
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-moon-gray ba br1"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="CCCCCC"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-washed-red ba br1"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FFDFDF"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-washed-green ba br1"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="E8FDF5"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-washed-blue ba br1"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="F6FFFE"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="draw-color-choice br-100 bg-washed-yellow ba br1"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FFFCEB"
+                            >&nbsp;</span>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt4">
+                        <div class="col-9">
+                            <div id="draw-size"></div>
+                        </div>
+                        <div class="col-3">
+                            <span
+                                id="draw-size-demo"
+                                class="br-100"
+                                style="display: inline-block"
+                                hex="357EDD"
+                            >&nbsp;</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,10 +377,15 @@
 
 
 <script>
+
     $(document).ready(function() {
         // $("#modal-text").modal({
         //     show: false
         // });
+        
+        let video = document.getElementById("user-video"),
+            videoCanvas = document.getElementById("video-canvas"),
+            videoContext = videoCanvas.getContext("2d");
         
         let Canvas = new fabric.Canvas("story-frame");
         let isDrawMode = false;
@@ -236,6 +395,43 @@
         //? Add change listener to uploader element
         let imageLoader = document.getElementById("imageLoader");
             imageLoader.addEventListener("change", uploadImage, false);
+
+        function updateTextFont() {
+            let selector = document.getElementById( "text-font" ),
+                family = selector.options[ selector.selectedIndex ].value,            
+                layer = Canvas.getActiveObject();
+
+            if(layer) {
+                layer.set({
+                    fontFamily: family
+                });
+
+                Canvas.renderAll();
+            }
+        }
+        $(document).on("change", "#text-color", updateTextColor);
+        $(document).on("change", "#background-color", function(e) {    
+            console.log(e.target.value);
+            Canvas.set({
+                backgroundColor: e.target.value
+            });
+
+            Canvas.renderAll();
+        });
+
+        function updateTextColor() {
+            let color = document.getElementById("text-color").value,
+                layer = Canvas.getActiveObject();
+
+            if(layer) {
+                layer.set({
+                    fill: color
+                });
+
+                Canvas.renderAll();
+            }
+        }
+        $(document).on("change", "#text-font", updateTextFont);
 
         //? Handle the actual image upload from client and put it into Fabric object on the Canvas
         function uploadImage(e){
@@ -296,6 +492,62 @@
             updateDrawSizeDemo();
         });
         
+        $(document).on("click", ".text-button", function(e) {
+            if($(this).attr("action").startsWith("align")) {
+                $("[action*=align]").each(function(e, v) {
+                    $(v).removeClass("active");
+                });
+            }
+            $(this).toggleClass("active");
+
+            let action = $(this).attr("action"),
+                layer = Canvas.getActiveObject(),
+                map = {
+                    "bold": (test) => [ `fontWeight`, test === true, `bold`, `normal` ],
+                    "italic": (test) => [ `fontStyle`, test === true, `italic`, `normal` ],
+                    "underline": (test) => [ `underline`, test === true, `true`, null ],
+                    "linethrough": (test) => [ `linethrough`, test === true, `true`, null ]
+                };
+
+            console.log(action, action.startsWith("align"), action.split("-"));
+            if(layer) {
+                for(let tx in map) {
+                    if(action === tx) {
+                        let act = map[ tx ](!!$(this).hasClass("active")),
+                            obj = {};
+
+                        obj[ act[ 0 ] ] = act[ 1 ] ? act[ 2 ] : act[ 3 ];
+                        layer.set(obj);
+
+                        Canvas.renderAll();
+                    } else if(action.startsWith("align")) {
+                        let [ verb, value ] = action.split("-");
+
+                        layer.set({
+                            "textAlign": value
+                        });
+
+                        Canvas.renderAll();
+                    }
+                }
+            }
+        });
+        $(document).on("click", ".text-color-choice", function(e) {
+            let color = `#${ $(this).attr("hex") }`,
+                layer = Canvas.getActiveObject();
+
+            if(layer) {
+                layer.set({
+                    fill: color
+                });
+
+                Canvas.renderAll();
+            }
+        });
+        
+        $(document).on("click", "#btn-background-color", function(e) {
+            $("#background-color")[0].click();
+        });
         $(document).on("click", "#btn-delete", function(e) {
             Canvas.remove(Canvas.getActiveObject());
         });
@@ -318,6 +570,33 @@
             } else {
                 $("#draw-tools").hide();
             }
+        });
+        $(document).on("click", "#btn-camera", function(e) {
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {                
+                if(video.srcObject && video.srcObject.getTracks().length > 0) {
+                    var hRatio = 400 / video.videoWidth,
+                        vRatio = 700 / video.videoHeight,
+                        ratio  = Math.min(hRatio, vRatio);
+
+                    console.log(video);
+                    videoContext.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 400, video.videoHeight * vRatio);
+                } else {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                        //video.src = window.URL.createObjectURL(stream);
+                        video.srcObject = stream;
+                        video.play();
+                    });
+                }
+            }
+        });
+        $(document).on("click", "#draw-user-video", function(e) {
+            $("#btn-camera")[0].click();
+            fabric.Image.fromURL(videoCanvas.toDataURL(), function(oImg) {
+                Canvas.add(oImg);
+            });
+        });
+        $(document).on("click", "#stop-user-video", function(e) {
+            video.srcObject.getTracks().forEach(track => track.stop());
         });
 
         // $(document).on("click", "#btn-image", function(e) {
