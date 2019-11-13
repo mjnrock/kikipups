@@ -789,12 +789,16 @@
         $(document).on("click", "#btn-make-gif", function(e) {
             let images = [];
 
+            //! It appears that the image is being rescaled and thus rasterized and thus losing substantial quality
+            //TODO Use FabricJS Canvas to repopulate the image from JSON, .toDataURL(), _then_ push into @images array
             $(".story-frame-container img").each(function(e, v) {
                 images.push(v.src);
             });
 
             gifshot.createGIF({
                 "images": images,
+                gifWidth: 400,
+                gifHeight: 700,
                 interval: +$("#gif-interval").val()
             }, function(obj) {
                 if(!obj.error) {
