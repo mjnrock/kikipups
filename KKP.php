@@ -832,7 +832,7 @@
                 });
             });
 
-            //FIXME There must be an ASYNC call from FabricJS to Images, as synchronous gifshot.createGIF(...) will faill on Object layers that contain images
+            //FIXME There must be an ASYNC call from FabricJS to Images, as synchronous gifshot.createGIF(...) will faill on Object layers that contain images by the JSON rendering method I'm using
             //NOTE Because of this, this is here as a janky fix.  Convert to Promise at some point, but it works--even with a 50ms delay--for now.
             setTimeout(() =>
                 gifshot.createGIF({
