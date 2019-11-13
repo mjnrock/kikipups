@@ -846,10 +846,12 @@
                     interval: +$("#gif-interval").val()
                 }, function(obj) {
                     if(!obj.error) {
-                        var image = obj.image,
-                        animatedImage = document.createElement("img");
-                        animatedImage.src = image;
-                        document.body.appendChild(animatedImage);
+                        //ANCHOR [Debug Only] This section adds the image into an <img /> at the end of the page
+                            var image = obj.image,
+                            animatedImage = document.createElement("img");
+                            animatedImage.src = image;
+                            document.body.appendChild(animatedImage);
+                        //ENDANCHOR
 
                         //TODO Have a triggering event to perform the open (e.g. button click)
                         window.open(animatedImage.src);
