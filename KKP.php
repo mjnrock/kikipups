@@ -806,7 +806,6 @@
 
 
         //? To save editable GIFs, create a JSON file that takes the Canvases JSON data and saves that, instead/also
-        //FIXME Something is preventing layers with an "Image" in the layer from rendering.  3 layers, 1 with image, only the other 2 will render into GIF
         $(document).on("click", "#btn-make-gif", function(e) {
             let images = [],
                 _tempCanvas = new fabric.Canvas();
@@ -820,29 +819,39 @@
                     });
                     _tempCanvas.renderAll();
 
-                    images.push(_tempCanvas.toDataURL({
+                    let data = _tempCanvas.toDataURL({
                         format: "png",
                         quality: 1.0
-                    }));
+                    });
+                    
+                    images.push(data);
+                    
+                    animatedImage = document.createElement("img");
+                    animatedImage.src = data;
+                    document.body.appendChild(animatedImage);
                 });
             });
 
-            gifshot.createGIF({
-                "images": images,
-                gifWidth: dimensions.width,
-                gifHeight: dimensions.height,
-                interval: +$("#gif-interval").val()
-            }, function(obj) {
-                if(!obj.error) {
-                    var image = obj.image,
-                    animatedImage = document.createElement("img");
-                    animatedImage.src = image;
-                    document.body.appendChild(animatedImage);
+            //FIXME There must be an ASYNC call from FabricJS to Images, as synchronous gifshot.createGIF(...) will faill on Object layers that contain images
+            //NOTE Because of this, this is here as a janky fix.  Convert to Promise at some point, but it works--even with a 50ms delay--for now.
+            setTimeout(() =>
+                gifshot.createGIF({
+                    "images": images,
+                    gifWidth: dimensions.width,
+                    gifHeight: dimensions.height,
+                    interval: +$("#gif-interval").val()
+                }, function(obj) {
+                    if(!obj.error) {
+                        var image = obj.image,
+                        animatedImage = document.createElement("img");
+                        animatedImage.src = image;
+                        document.body.appendChild(animatedImage);
 
-                    //TODO Have a triggering event to perform the open (e.g. button click)
-                    window.open(animatedImage.src);
-                }
-            });
+                        //TODO Have a triggering event to perform the open (e.g. button click)
+                        window.open(animatedImage.src);
+                    }
+                })
+            , 50);
         });
     });
 </script>
