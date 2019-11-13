@@ -537,7 +537,17 @@
             slide: function(event, ui) {
                 drawSize = +ui.value;
 
-                $("#draw-size").val(drawSize);
+                $("#draw-size").val(drawSize);                
+            
+                let layer = Canvas.getActiveObject();
+
+                if(layer) {
+                    layer.set({
+                        strokeWidth: drawSize
+                    });
+
+                    Canvas.renderAll();
+                }
                 
                 updateDrawSizeDemo();
             }
@@ -545,7 +555,17 @@
 
         $(document).on("click", ".draw-color-choice", function(e) {
             drawColor = `#${ $(this).attr("hex") }`;
+            
+            let layer = Canvas.getActiveObject();
 
+            if(layer) {
+                layer.set({
+                    stroke: drawColor
+                });
+
+                Canvas.renderAll();
+            }
+            
             updateDrawSizeDemo();
         });
         
@@ -621,6 +641,7 @@
             Canvas.isDrawingMode = isDrawMode;
 
             if(isDrawMode) {
+                updateDrawSizeDemo();
                 $("#draw-tools").show();
             } else {
                 $("#draw-tools").hide();
