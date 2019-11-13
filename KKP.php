@@ -446,7 +446,10 @@
             videoCanvas = document.getElementById("video-canvas"),
             videoContext = videoCanvas.getContext("2d");
         
-        const Canvas = new fabric.Canvas("story-active-frame");
+        //? If "backgroundColor" is not present, Canvas will be transparent and will cause issues when converting to GIF (i.e. transparent layers)
+        const Canvas = new fabric.Canvas("story-active-frame", {
+            backgroundColor: "#FFF"
+        });
         let isDrawMode = false;
         let drawColor = "#000";
         let drawSize = 25;
