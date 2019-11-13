@@ -97,7 +97,7 @@
             </button>
 
             <div class="toolsets">
-                <div id="text-tools">
+                <div id="text-tools" style="display: none;">
                     <div class="row mt4">
                         <div class="col">
                             <div class="btn-group">
@@ -180,6 +180,13 @@
                                 class="text-color-choice br-100 bg-black"
                                 style="display: inline-block; width: 48px; height: 48px;"
                                 hex="000000"
+                            >&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <span
+                                class="text-color-choice br-100 bg-white ba br1"
+                                style="display: inline-block; width: 48px; height: 48px;"
+                                hex="FFFFFF"
                             >&nbsp;</span>
                         </div>
                         <div class="col">
@@ -392,6 +399,20 @@
         let drawColor = "#000";
         let drawSize = 25;
 
+        Canvas.on({
+            "selection:updated": canvasObjectSelectHandler,
+            "selection:created": canvasObjectSelectHandler,
+            "selection:cleared": canvasObjectSelectHandler
+        });
+
+        function canvasObjectSelectHandler(e) {
+            if(!e.deselected && e.selected.length === 1 && e.selected[ 0 ] instanceof fabric.Text) {
+                $("#text-tools").show();
+            } else {
+                $("#text-tools").hide();
+            }
+        }
+
         //? Add change listener to uploader element
         let imageLoader = document.getElementById("imageLoader");
             imageLoader.addEventListener("change", uploadImage, false);
@@ -578,7 +599,6 @@
                         vRatio = 700 / video.videoHeight,
                         ratio  = Math.min(hRatio, vRatio);
 
-                    console.log(video);
                     videoContext.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 400, video.videoHeight * vRatio);
                 } else {
                     navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
