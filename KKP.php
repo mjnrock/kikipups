@@ -402,14 +402,18 @@
         Canvas.on({
             "selection:updated": canvasObjectSelectHandler,
             "selection:created": canvasObjectSelectHandler,
-            "selection:cleared": canvasObjectSelectHandler
+            "selection:cleared": (e) => canvasObjectSelectHandler(e, true)
         });
 
-        function canvasObjectSelectHandler(e) {
-            if(!e.deselected && e.selected.length === 1 && e.selected[ 0 ] instanceof fabric.Text) {
-                $("#text-tools").show();
-            } else {
-                $("#text-tools").hide();
+        function canvasObjectSelectHandler(e, clear = false) {
+            if(e.selected && e.selected.length === 1) {
+                if(e.target instanceof fabric.Text) {
+                    $("#text-tools").show();
+                    $("#draw-tools").hide();
+                } else if(e.target instanceof fabric.Path) {
+                    $("#draw-tools").show();
+                    $("#text-tools").hide();
+                }
             }
         }
 
