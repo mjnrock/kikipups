@@ -718,6 +718,8 @@
                 $("#draw-tools").hide();
             }
         });
+        
+        //FIXME This can only be called once, so this is clearly not the proper way to do this--if you Play, Stop, then Play, the camera will not re-activate
         $(document).on("click", "#btn-camera", function(e) {
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {                
                 if(video.srcObject && video.srcObject.getTracks().length > 0) {
@@ -741,6 +743,8 @@
                 Canvas.add(oImg);
             });
         });
+
+        //FIXME While this stops the track, it cannot be restarted--not sure if from this method or from the invocation method to begin with
         $(document).on("click", "#stop-user-video", function(e) {
             video.srcObject.getTracks().forEach(track => track.stop());
         });
