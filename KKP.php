@@ -492,7 +492,8 @@
         });
         emojiPicker.on("emoji", emoji => {
             let text = new fabric.Textbox(emoji, {
-                fontSize: 80
+                fontSize: 80,
+                editable: false
             });
 
             Canvas.add(text);
